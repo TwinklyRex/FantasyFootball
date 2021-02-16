@@ -1,0 +1,7 @@
+"0","new_data <-  data.frame("
+"0","  median_homes = c(4.3, 5.9, 6.4, 8.8)  # predictor column name needs to be the same as the one in the original dataset"
+"0",")"
+"0",""
+"0","predict(Boston_model, new_data)"
+"2","Error in eval(predvars, data, env) : object 'Room' not found
+"

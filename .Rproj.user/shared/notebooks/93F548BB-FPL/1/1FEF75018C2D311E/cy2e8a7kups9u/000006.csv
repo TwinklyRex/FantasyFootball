@@ -1,0 +1,12 @@
+"0","library(fplscrapR)"
+"0","#scrape data to get each teams weekly captain"
+"0","captains <- get_entry_captain(ids, myleague_df$event[1:21])"
+"0",""
+"0","#add to one data frame"
+"0","captains_df <- dplyr::bind_rows(captains)"
+"0","captains_df <- dplyr::arrange(captains_df,event)"
+"0",""
+"0","ggplot(captains_df, aes(x = captains, group = playername)) + geom_histogram()"
+"2","Error: Aesthetics must be either length 1 or the same as the data (231): x
+[90mRun `rlang::last_error()` to see where the error occurred.[39m
+"

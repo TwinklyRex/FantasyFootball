@@ -1,0 +1,1 @@
+{"frames":[{"func":"mean(measured_weights)","file":"","line_number":0,"end_line_number":0,"character_number":0,"end_character_number":0}],"message":"Error in mean(measured_weights) : object 'measured_weights' not found\n"}

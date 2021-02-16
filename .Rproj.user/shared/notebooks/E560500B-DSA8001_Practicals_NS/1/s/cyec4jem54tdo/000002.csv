@@ -1,0 +1,11 @@
+"0","```r
+pass_inspection <- pnorm(36.2, mean = 36, sd = 0.11) - pnorm(35.8, mean = 36, sd = 0.11)
+pass_inspection
+```"
+"1","[1] 0.9309637
+"
+"0","```r
+round(pass_inspection * 100, 2)
+```"
+"1","[1] 93.1
+"

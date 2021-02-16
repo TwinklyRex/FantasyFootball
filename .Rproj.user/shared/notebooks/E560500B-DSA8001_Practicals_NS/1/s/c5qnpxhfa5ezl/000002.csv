@@ -1,0 +1,21 @@
+"0","```r
+possum1 <- 95.4
+possum2 <- 85.8
+mean <- 92.6
+sd <- 3.6
+
+possum_1_zscore <- (possum1 - mean)/ sd
+possum_2_zscore <- (possum2 - mean)/ sd
+
+p1_sd <- (possum1 - mean)/ possum_1_zscore
+p2_sd <- (possum2 - mean)/ possum_2_zscore
+
+possum_1_zscore
+```"
+"1","[1] 0.7777778
+"
+"0","```r
+possum_2_zscore
+```"
+"1","[1] -1.888889
+"

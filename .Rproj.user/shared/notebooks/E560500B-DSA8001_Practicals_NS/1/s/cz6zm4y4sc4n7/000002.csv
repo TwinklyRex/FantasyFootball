@@ -1,0 +1,6 @@
+"0","```r
+friends_count <- qnorm(0.7995, mean = 1500, sd = 300) %>% round(0)
+friends_count
+```"
+"1","[1] 1752
+"

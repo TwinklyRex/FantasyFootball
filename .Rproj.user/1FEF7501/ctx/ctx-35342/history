@@ -1,0 +1,512 @@
+paste0("p_value = ", p_value)
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p_value = ",
+p_value * 100,
+"% > 5%."
+)
+# 95% C.I.
+z_critical <- qnorm(0.975)
+ci <- c(p_hat - z_critical * sqrt(p_hat * (1-p_hat) / n), p_hat + z_critical * sqrt(p_hat * (1-p_hat) / n))
+ci <- round(ci, 3)
+paste0("95% C.I. is [", ci[1], ", ", ci[2], "]")
+# or alternatively
+test_results <- prop.test(x = c(78), n = c(120), p = c(0.7), correct = F, alternative = "two.sided")
+test_results
+p_value_alt <- round(test_results$p.value, 3)
+paste0("p_value_alt = ", p_value_alt)
+p_value_alt == p_value
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p_value_alt = ",
+p_value_alt * 100,
+"% > 5%."
+)
+# Slightly different values of the 95% CI are obtained because
+# R's CI formula is based on the Yates continuity correction formula which is used in Chi-square tests
+ci_alt <- test_results$conf.int
+ci_alt <- round(ci_alt, 3)
+paste0("95% C.I. is [", ci_alt[1], ", ", ci_alt[2], "]")
+knitr::opts_chunk$set(echo = TRUE)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = $\bar{x}_{value}$, sd = $$N(\mu = \bar{x}_{value}, \sigma = 10.67)$$ ), 1), "F")
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = $\bar{x}_{value}$, sigma = 10.67, 1), "F")
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = \bar{x}_{value}$, sigma = 10.67, 1), "F")
+paste0("The cutoff value for the lowest 3% of human body temperature is ",
+round(qnorm(0.03, mean = 98.2, sd = 0.73), 1), "F")
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = $\bar{x}_{value}$, sigma = 10.67, 1))
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = bar{x}_{value}, sigma = 10.67, 1))
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = $\bar{x}_{value}$, sigma = 10.67, 1))
+Boston %>%
+select (
+radial
+) %>%
+group_by(zone)
+knitr::opts_chunk$set(echo = TRUE)
+if(!require(tidyverse)) install.packages("tidyverse")
+if(!require(car)) install.packages("car")
+library(tidyverse)
+library(car)
+set.seed(123)
+library(MASS)
+data(Boston)
+Boston <-  tibble(Boston)
+Boston <- Boston %>%
+rename(Crime = crim) %>%
+rename(Zone = zn) %>%
+rename(River = chas) %>%
+rename(Room = rm) %>%
+rename(Radial = rad) %>%
+rename(Ratio = ptratio) %>%
+rename(Value = medv)  %>%
+dplyr:: select(Crime,Zone,River,Room,
+Radial,Ratio,Value)
+Boston %>%
+select (
+Radial
+) %>%
+group_by(Zone)
+Boston %>%
+group_by(Zone) %>%
+select (
+Radial
+)
+Boston %>%
+group_by(Zone) %>%
+select (
+rad
+)
+head(Boston)
+glimpse(Boston)
+Boston %>%
+group_by(Zone) %>%
+select (
+rad
+)
+head(Boston)
+glimpse(Boston)
+Boston %>%
+group_by(Zone) %>%
+select(
+rad
+)
+head(Boston)
+glimpse(Boston)
+Boston %>%
+group_by(Zone) %>%
+select(
+Radial
+)
+head(Boston)
+glimpse(Boston)
+Boston %>%
+group_by(Zone) %>%
+select(
+Radial, Zone
+)
+knitr::opts_chunk$set(echo = TRUE)
+Boston_copy <- Boston %>%
+select (
+Value,
+Room
+)
+Boston_copy <- Boston %>%
+select (
+medv,
+rm
+)
+Boston_model <- lm(Value ~ Room, data = Boston_copy)
+Boston_copy <- Boston %>%
+select (
+Value,
+Room
+)
+Boston_model <- lm(Value ~ Room, data = Boston_copy)
+dplyr:: select()
+Boston_copy <- Boston %>%
+dplyr:: select (
+Value,
+Room
+)
+Boston_copy
+head(Boston_copy)
+Boston_model <- lm(Value ~ Room, data = Boston_copy)
+Boston_model <- lm(Value ~ Room, data = Boston_copy)
+Boston_model <- lm(Value ~ Room, data = Boston_copy)
+plot(Boston_copy$Value, Boston_copy$Room)
+abline(Boston_model, col="red")
+plot(Boston_copy$Value, Boston_copy$Room)
+abline(Boston_model, col="red")
+summary(Boston_model)
+summary(iris_model)
+new_data <-  data.frame(
+median_homes = c(4.3, 5.9, 6.4, 8.8)  # predictor column name needs to be the same as the one in the original dataset
+)
+predict(Boston_model, new_data)
+knitr::opts_chunk$set(echo = TRUE)
+Boston %>%
+Boston_subset <- subset(Boston, Zone > 75)
+if(!require(tidyverse)) install.packages("tidyverse")
+if(!require(car)) install.packages("car")
+library(tidyverse)
+library(car)
+set.seed(123)
+library(MASS)
+data(Boston)
+Boston <-  tibble(Boston)
+Boston <- Boston %>%
+rename(Crime = crim) %>%
+rename(Zone = zn) %>%
+rename(River = chas) %>%
+rename(Room = rm) %>%
+rename(Radial = rad) %>%
+rename(Ratio = ptratio) %>%
+rename(Value = medv)  %>%
+dplyr:: select(Crime,Zone,River,Room,
+Radial,Ratio,Value)
+Boston %>%
+Boston_subset <- subset(Boston, Zone > 75)
+?subset()
+subset
+?subset
+knitr::opts_chunk$set(echo = TRUE)
+Boston %>%
+summarise(
+n_samples = n(),
+n_rows = nrows(),
+n_columns = ncolumns(),
+)
+Boston %>%
+summarise(
+n_samples = n(),
+n_rows = nrow(),
+n_columns = ncolumn(),
+)
+Boston %>%
+summarise(
+n_samples = n(),
+n_rows = nrow(Boston),
+n_columns = ncolumn(),
+)
+Boston %>%
+summarise(
+n_samples = n(),
+n_rows = nrow(Boston),
+n_columns = ncolumn(Boston),
+)
+head(Boston)
+glimpse(Boston)
+Boston %>%
+group_by(Zone) %>%
+dplyr::select(
+Radial
+)  %>%
+summarise(
+median_radial = median(Radial, na.rm = TRUE)
+)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = $\bar{x}_{value}$, sigma = 10.67, 1))
+Boston %>%
+dim()
+Boston %>%
+dim()
+paste0("There are 506 observations and 7 Variables")
+class(Boston)
+Boston %>%
+dim()
+paste0("There are 506 observations and 7 Variables")
+class(Crime)
+Boston %>%
+dim()
+paste0("There are 506 observations and 7 Variables")
+class(crim)
+Boston %>%
+dim() %>%
+class(crim)
+Boston %>%
+dim()
+class(Boston, crim)
+Boston %>%
+dim()
+class(Boston, Crime)
+Boston %>%
+dim()
+Boston %>%
+class(Crime)
+Boston %>%
+dim()
+Boston %>%
+class(crim)
+Boston %>%
+dim()
+Boston %>%
+class(Boston$crim)
+Boston %>%
+dim()
+class(Boston$crim)
+paste0("There are 506 observations and 7 Variables")
+Boston %>%
+dim()
+class(Boston$Crime)
+paste0("There are 506 observations and 7 Variables")
+Boston %>%
+dim()
+class(Boston$Crime)
+class(Boston$Zone)
+class(Boston$River)
+class(Boston$Room)
+class(Boston$Radial)
+class(Boston$Ratio)
+class(Boston$Value)
+paste0("There are 506 observations and 7 Variables")
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67, 1))
+paste0("and the proportion of homes above this value is
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67, 1)
+paste0("and the proportion of homes above this value is
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67, 1)
+paste0("and the proportion of homes above this value is
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1)
+paste0("and the proportion of homes above this value is
+new_data <-  data.frame(
+median_homes = c(4.3, 5.9, 6.4, 8.8)  # predictor column name needs to be the same as the one in the original dataset
+)
+predict(Boston_model, new_data)
+Boston_model <- lm(Value ~ Room, data = Boston_copy)
+plot(Boston_copy$Value, Boston_copy$Room)
+abline(Boston_model, col="red")
+summary(Boston_model)
+Boston_copy <- Boston %>%
+dplyr:: select (
+Value,
+Room
+)
+head(Boston_copy)
+Boston_model <- lm(Value ~ Room, data = Boston_copy)
+plot(Boston_copy$Room, Boston_copy$Value)
+abline(Boston_model, col="red")
+summary(Boston_model)
+new_data <-  data.frame(
+Petal.Length = c(1.5, 1.6, 1.7)  # predictor column name needs to be the same as the one in the original dataset
+)
+predict(iris_model, new_data)
+Boston %>%
+Boston_subset <- subset(Boston, Zone > 75)
+Boston_subset <- subset(Boston, Zone > 75)
+Boston_subset <- subset(Boston, Zone > 75)
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1)
+paste0("and the proportion of homes above this value is
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1))
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma == 10.67), 1))
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1))
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+#round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1))
+paste0("and the proportion of homes above this value is
+",
+(round(pnorm(0.91, mean = mean_owner, sd = 10.67, lower.tail = FALSE) * 100, 2))
+head(Boston)
+glimpse(Boston)
+Boston %>%
+group_by(Zone) %>%
+dplyr::select(
+Radial
+)  %>%
+summarise(
+median_radial = median(Radial, na.rm = TRUE)
+)
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_!bound <- Boston$River == 0
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_notbound <- Boston$River == 0
+p_value <- 2 * pnorm(z)
+p_value <- round(p_value, 3)
+paste0("p_value = ", p_value)
+# calculating 95% C.I.
+z_critical <- qnorm(0.975)
+ci <- c(
+x - z_critical * sqrt(stdev^2/n),
+x + z_critical * sqrt(stdev^2/n)
+)
+Boston_subset <- subset(Boston, Zone > 75)
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_notbound <- Boston$River == 0
+if(river_bound)(
+mu_v = mean(Value)
+)
+if(river_notbound)(
+mu_n = mean(Value)
+)
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_notbound <- Boston$River == 0
+if(river_bound)(
+mu_v = mean(Value)
+)
+if(river_notbound)(
+mu_n = mean(Value, na.rm = FALSE)
+)
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_notbound <- Boston$River == 0
+if(river_bound)(
+mu_v = mean(Value)
+)
+if(river_notbound)(
+mu_n = mean(Value)
+)
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_notbound <- Boston$River == 0
+if(river_bound)(
+mu_v = mean(Value)
+)
+if(river_notbound)(
+mu_n = mean(Value)
+)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+library(fplscrapR)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+#scrape data to get each teams weekly captain
+captains <- get_entry_captain(ids, myleague_df$event[1:21])
+library(fplscrapR)
+library(dplyr)
+#we fetch my player selection picks for the next gameweek
+picks <- get_entry_picks(entryid=846352,gw=21)$picks
+# fetch the Official FPL Expected Points projections
+df <- get_player_info() %>%
+select(id,playername,ep_next) %>%
+mutate("element"=id)
+#indicate expected points projection is a numeric vector
+df$ep_next <- as.numeric(df$ep_next)
+#
+df2 <- left_join(picks,df,by="element") %>% select(playername,is_captain,is_vice_captain,ep_next)
+df2
+#Add up all the expected points of the players I have picked for gameweek 21
+print(sum(df2$ep_next[1:11]))
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+library(fplscrapR)
+library(tidyverse)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+library(fplscrapR)
+library(tidyverse)
+# install.packages("tidyverse")
+library(tidyverse)
+paste0("Just like the other estimated 7.5 million Fantasy Football Players in the world, I compete in a mini-league with my friends. In this report, I am going to analyse the statistics behind this years (2021) mini-league beginning with how the league table has changed each gameweek.")
+#ids for each team
+ids <- c(846352, 3215836, 2205222, 2436805, 4426769, 3878948, 3968541, 2464418, 254903, 2694508, 2856693)
+#scrape data to get each teams weekly performance
+myleague <- lapply(ids, get_entry_season)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+library(fplscrapR)
+library(tidyverse)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+install.packages("data.table")
+devtools::install_github("renkun-ken/formattable")
+install.packages("dplyr")
+install.packages("dplyr")
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+install.packages("data.table")
+install.packages("devtools")
+library(fplscrapR)
+library(dplyr)
+library(formattable)
+library(fplscrapR)
+library(dplyr)
+library(data.table)
+#we fetch my player selection picks for the next gameweek
+picks <- get_entry_picks(entryid=846352,gw=21)$picks
+# fetch the Official FPL Expected Points projections
+df <- get_player_info() %>%
+select(id,playername,ep_next) %>%
+mutate("element"=id)
+#indicate expected points projection is a numeric vector
+df$ep_next <- as.numeric(df$ep_next)
+#
+df2 <- left_join(picks,df,by="element") %>% select(playername,is_captain,is_vice_captain,ep_next)
+#rename table columns
+colnames(df2) = c("Player Name", "Captain", "Vice Captain", "Expected Points")
+#Add up all the expected points of the players I have picked for gameweek 21
+ep <- sum(df2$ep_next[1:11])
+#Create new row to display total expected points
+new_row <- c("", "", "", ep)
+#bind new row to table and print
+ep_table <- rbind(df2, new_row)
+formattable(ep_table)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+install.packages("data.table")
+install.packages("devtools")

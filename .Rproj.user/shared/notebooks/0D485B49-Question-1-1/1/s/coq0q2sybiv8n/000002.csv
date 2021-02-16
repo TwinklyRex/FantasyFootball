@@ -1,0 +1,1 @@
+"0","Boston_model <- lm(Value ~ Room, data = Boston_copy)"

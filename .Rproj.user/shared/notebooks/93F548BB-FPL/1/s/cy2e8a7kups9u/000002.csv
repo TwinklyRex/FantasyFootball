@@ -1,0 +1,5 @@
+"0","#scrape data to get each teams weekly captain"
+"0","captains <- get_entry_captain(ids, myleague_df$event[1:21])"
+"2","Error in get_entry_captain(ids, myleague_df$event[1:21]) : 
+  could not find function ""get_entry_captain""
+"

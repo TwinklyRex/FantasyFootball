@@ -1,0 +1,6 @@
+"0","p_value <- (2 * pt(t, df = n - 1, lower.tail = TRUE)) %>% round(3)"
+"0","paste0(""p_value = "", p_value)"
+"1","[1]"
+"1"," ""p_value = 2"""
+"1","
+"

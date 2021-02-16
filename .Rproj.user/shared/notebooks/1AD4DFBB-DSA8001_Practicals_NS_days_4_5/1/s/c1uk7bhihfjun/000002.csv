@@ -1,0 +1,8 @@
+"0","iris_copy %>% "
+"0","  group_by(Species) %>% "
+"0","  summarise("
+"0","    n_samples = n(),"
+"0","    n_missing = sum(is.na(Sepal.Width)),"
+"0","    mean_sepal_width = mean(Sepal.Width, na.rm = TRUE),"
+"0","    sd_sepal_width = sd(Sepal.Width, na.rm = T)"
+"0","  )"

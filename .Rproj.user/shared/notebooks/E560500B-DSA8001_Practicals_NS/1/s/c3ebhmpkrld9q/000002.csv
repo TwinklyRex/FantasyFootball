@@ -1,0 +1,12 @@
+"0","```r
+z_Scores <- function(x, mu, sig) {
+  z <- (x - mu) / sig
+  z
+}
+z1_fun <- z_Scores(x = possum1, mu = mean, sig = sd)
+z2_fun <- z_Scores(x = possum2, mu = mean, sig = sd)
+
+z1_fun %>% round(2)
+```"
+"1","Error in z1_fun %>% round(2) : could not find function \"%>%\"
+"

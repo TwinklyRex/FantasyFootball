@@ -1,0 +1,5 @@
+"0","```r
+paste0(round(pnorm(35.8, mean = 36, sd = 0.11)  *100, 2), \"% of bottles have less than 35.8oz of Ketchup\")
+```"
+"1","[1] \"3.45% of bottles have less than 35.8oz of Ketchup\"
+"

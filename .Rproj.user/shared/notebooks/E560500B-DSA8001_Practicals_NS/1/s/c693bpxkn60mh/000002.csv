@@ -1,0 +1,28 @@
+"0","```r
+install.packages(dplyr)
+```"
+"1","Error in install.packages : object 'dplyr' not found
+"
+"0","```r
+install.packages(tidyverse)
+```"
+"1","Error in install.packages : object 'tidyverse' not found
+"
+"0","```r
+#normal distribution
+#qnorm
+#pnorm
+
+#t-distribution
+#pt
+#qt
+
+#chi-squared distribution
+#pchisq
+#qchisq
+
+pt(-2.1, 18) %>%
+  round(3)
+```"
+"1","[1] 0.025
+"

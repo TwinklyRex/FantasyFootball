@@ -1,0 +1,32 @@
+"0","library(fplscrapR)"
+"0","library(dplyr)"
+"2","
+Attaching package: ‘dplyr’
+
+"
+"2","The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+"
+"2","The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+"
+"0","#we fetch my player selection picks for the next gameweek"
+"0","picks <- get_entry_picks(entryid=846352,gw=21)$picks"
+"0",""
+"0",""
+"0","# fetch the Official FPL Expected Points projections "
+"0","df <- get_player_info() %>%"
+"0","  select(id,playername,ep_next) %>%"
+"0","  mutate(""element""=id)"
+"0",""
+"0","#indicate expected points projection is a numeric vector"
+"0","df$ep_next <- as.numeric(df$ep_next)"
+"0",""
+"0","#"
+"0","df2 <- left_join(picks,df,by=""element"") %>% select(playername,is_captain,is_vice_captain,ep_next)"
+"0",""
+"0","df2"

@@ -1,0 +1,8 @@
+"0","paste0(""Test isn't significant at 5% level, because 0.1% < p = "", "
+"0","       p_value * 100,"
+"0","       ""% <= 1%.  There is no evidence for rejection H0 in favour HA."""
+"0",")"
+"1","[1]"
+"1"," ""Test isn't significant at 5% level, because 0.1% < p = 200% <= 1%.  There is no evidence for rejection H0 in favour HA."""
+"1","
+"

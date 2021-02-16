@@ -1,0 +1,7 @@
+"0","iris_copy <- iris %>% "
+"0","  select("
+"0","    Sepal.Width,"
+"0","    Species"
+"0","  )"
+"0",""
+"0","iris_copy"

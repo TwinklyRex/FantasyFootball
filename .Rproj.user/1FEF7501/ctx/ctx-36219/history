@@ -1,0 +1,512 @@
+Boston %>%
+dim()
+class(Boston$crim)
+paste0("There are 506 observations and 7 Variables")
+Boston %>%
+dim()
+class(Boston$Crime)
+paste0("There are 506 observations and 7 Variables")
+Boston %>%
+dim()
+class(Boston$Crime)
+class(Boston$Zone)
+class(Boston$River)
+class(Boston$Room)
+class(Boston$Radial)
+class(Boston$Ratio)
+class(Boston$Value)
+paste0("There are 506 observations and 7 Variables")
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67, 1))
+paste0("and the proportion of homes above this value is
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67, 1)
+paste0("and the proportion of homes above this value is
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67, 1)
+paste0("and the proportion of homes above this value is
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1)
+paste0("and the proportion of homes above this value is
+new_data <-  data.frame(
+median_homes = c(4.3, 5.9, 6.4, 8.8)  # predictor column name needs to be the same as the one in the original dataset
+)
+predict(Boston_model, new_data)
+Boston_model <- lm(Value ~ Room, data = Boston_copy)
+plot(Boston_copy$Value, Boston_copy$Room)
+abline(Boston_model, col="red")
+summary(Boston_model)
+Boston_copy <- Boston %>%
+dplyr:: select (
+Value,
+Room
+)
+head(Boston_copy)
+Boston_model <- lm(Value ~ Room, data = Boston_copy)
+plot(Boston_copy$Room, Boston_copy$Value)
+abline(Boston_model, col="red")
+summary(Boston_model)
+new_data <-  data.frame(
+Petal.Length = c(1.5, 1.6, 1.7)  # predictor column name needs to be the same as the one in the original dataset
+)
+predict(iris_model, new_data)
+Boston %>%
+Boston_subset <- subset(Boston, Zone > 75)
+Boston_subset <- subset(Boston, Zone > 75)
+Boston_subset <- subset(Boston, Zone > 75)
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1)
+paste0("and the proportion of homes above this value is
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1))
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma == 10.67), 1))
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1))
+mean_owner <- mean(Boston$Value)
+paste0("The cutoff value for the top 9% of the overall values of owner-occupied homes ",
+#round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1))
+paste0("and the proportion of homes above this value is
+",
+(round(pnorm(0.91, mean = mean_owner, sd = 10.67, lower.tail = FALSE) * 100, 2))
+head(Boston)
+glimpse(Boston)
+Boston %>%
+group_by(Zone) %>%
+dplyr::select(
+Radial
+)  %>%
+summarise(
+median_radial = median(Radial, na.rm = TRUE)
+)
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_!bound <- Boston$River == 0
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_notbound <- Boston$River == 0
+p_value <- 2 * pnorm(z)
+p_value <- round(p_value, 3)
+paste0("p_value = ", p_value)
+# calculating 95% C.I.
+z_critical <- qnorm(0.975)
+ci <- c(
+x - z_critical * sqrt(stdev^2/n),
+x + z_critical * sqrt(stdev^2/n)
+)
+Boston_subset <- subset(Boston, Zone > 75)
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_notbound <- Boston$River == 0
+if(river_bound)(
+mu_v = mean(Value)
+)
+if(river_notbound)(
+mu_n = mean(Value)
+)
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_notbound <- Boston$River == 0
+if(river_bound)(
+mu_v = mean(Value)
+)
+if(river_notbound)(
+mu_n = mean(Value, na.rm = FALSE)
+)
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_notbound <- Boston$River == 0
+if(river_bound)(
+mu_v = mean(Value)
+)
+if(river_notbound)(
+mu_n = mean(Value)
+)
+#H0 There is not sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+#HA There is sufficient evidence to suggest that the average value of owner-occupied homes is different between those which bound the Charles river versus those which do not.
+river_bound <- Boston$River == 1
+river_notbound <- Boston$River == 0
+if(river_bound)(
+mu_v = mean(Value)
+)
+if(river_notbound)(
+mu_n = mean(Value)
+)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+library(fplscrapR)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+install.packages("dplyr")
+#scrape data to get each teams weekly captain
+captains <- get_entry_captain(ids, myleague_df$event[1:21])
+library(fplscrapR)
+library(dplyr)
+#we fetch my player selection picks for the next gameweek
+picks <- get_entry_picks(entryid=846352,gw=21)$picks
+# fetch the Official FPL Expected Points projections
+df <- get_player_info() %>%
+select(id,playername,ep_next) %>%
+mutate("element"=id)
+#indicate expected points projection is a numeric vector
+df$ep_next <- as.numeric(df$ep_next)
+#
+df2 <- left_join(picks,df,by="element") %>% select(playername,is_captain,is_vice_captain,ep_next)
+df2
+#Add up all the expected points of the players I have picked for gameweek 21
+print(sum(df2$ep_next[1:11]))
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+library(fplscrapR)
+library(tidyverse)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+library(fplscrapR)
+library(tidyverse)
+# install.packages("tidyverse")
+library(tidyverse)
+paste0("Just like the other estimated 7.5 million Fantasy Football Players in the world, I compete in a mini-league with my friends. In this report, I am going to analyse the statistics behind this years (2021) mini-league beginning with how the league table has changed each gameweek.")
+#ids for each team
+ids <- c(846352, 3215836, 2205222, 2436805, 4426769, 3878948, 3968541, 2464418, 254903, 2694508, 2856693)
+#scrape data to get each teams weekly performance
+myleague <- lapply(ids, get_entry_season)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+library(fplscrapR)
+library(tidyverse)
+paste0("Just like the other estimated 7.5 million Fantasy Football Players in the world, I compete in a mini-league with my friends. In this report, I am going to analyse the statistics behind this years (2021) mini-league beginning with how the league table has changed each gameweek.")
+#ids for each team
+ids <- c(846352, 3215836, 2205222, 2436805, 4426769, 3878948, 3968541, 2464418, 254903, 2694508, 2856693)
+#scrape data to get each teams weekly performance
+myleague <- lapply(ids, get_entry_season)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+remotes::install_github("wiscostret/fplscrapR")
+library(fplscrapR)
+#ids for each team
+ids <- c(846352, 3215836, 2205222, 2436805, 4426769, 3878948, 3968541, 2464418, 254903, 2694508, 2856693)
+#scrape data to get each teams weekly performance
+myleague <- lapply(ids, get_entry_season)
+#ids for each team
+ids <- c(846352, 3215836, 2205222, 2436805, 4426769, 3878948, 3968541, 2464418, 254903, 2694508, 2856693)
+#scrape data to get each teams weekly performance
+myleague <- lapply(ids)
+#we fetch the entry information using get_entry
+df <- get_entry(entryid=846352)
+library(fplscrapR)
+#we fetch the entry information using get_entry
+df <- get_entry(entryid=846352)
+df$leagues$classic %>%
+# selecting the columns of interest here
+select(name,entry_last_rank)
+library(fplscrapR)
+#we fetch the entry information using get_entry
+df <- get_entry(entryid=846352)
+df$leagues$classic %>%
+# selecting the columns of interest here
+dplyr::select(name,entry_last_rank)
+library(fplscrapR)
+#ids for each team
+ids <- c(846352, 3215836, 2205222, 2436805, 4426769, 3878948, 3968541, 2464418, 254903, 2694508, 2856693)
+#scrape data to get each teams weekly performance
+myleague <- lapply(ids, get_entry_season)
+#add to one data frame
+myleague_df <- bind_rows(myleague)
+library(fplscrapR)
+#ids for each team
+ids <- c(846352, 3215836, 2205222, 2436805, 4426769, 3878948, 3968541, 2464418, 254903, 2694508, 2856693)
+#scrape data to get each teams weekly performance
+myleague <- lapply(ids, get_entry_season)
+#add to one data frame
+myleague_df <- dplyr::bind_rows(myleague)
+myleague_df <- arrange(myleague_df,event,overall_rank)
+library(fplscrapR)
+#ids for each team
+ids <- c(846352, 3215836, 2205222, 2436805, 4426769, 3878948, 3968541, 2464418, 254903, 2694508, 2856693)
+#scrape data to get each teams weekly performance
+myleague <- lapply(ids, get_entry_season)
+#add to one data frame
+myleague_df <- dplyr::bind_rows(myleague)
+myleague_df <- dplyr::arrange(myleague_df,event,overall_rank)
+#work out Week by week rank
+myleague_df <- myleague_df %>%
+dplyr::group_by(event) %>%
+dplyr::mutate(week_rank = rank(overall_rank, ties.method = 'first'))
+#title of league
+league_title = 'The High Rollers'
+#colour picker: http://tristen.ca/hcl-picker/#/hlc/15/0.81/25303A/F2ED7C
+fpl <- ggplot(myleague_df, aes(x = event, y = week_rank, group = name)) + geom_line(aes(colour = name)) + geom_text(data = myleague_df[myleague_df$event == max(myleague_df$event),], aes(label = paste0(name,' (',total_points,' pts)')), vjust = -0.25, nudge_x = 2, size = 6) + labs(title = paste0(league_title, ' League'), x = 'Gameweek', y = 'Rank',  subtitle = paste0('Gameweek ',max(myleague_df$event))) + theme_minimal() + scale_color_discrete(name = "Player Name") +  scale_y_continuous(trans = "reverse")
+library(fplscrapR)
+library(ggplot2)
+#ids for each team
+ids <- c(846352, 3215836, 2205222, 2436805, 4426769, 3878948, 3968541, 2464418, 254903, 2694508, 2856693)
+#scrape data to get each teams weekly performance
+myleague <- lapply(ids, get_entry_season)
+#add to one data frame
+myleague_df <- dplyr::bind_rows(myleague)
+myleague_df <- dplyr::arrange(myleague_df,event,overall_rank)
+#work out Week by week rank
+myleague_df <- myleague_df %>%
+dplyr::group_by(event) %>%
+dplyr::mutate(week_rank = rank(overall_rank, ties.method = 'first'))
+#title of league
+league_title = 'The High Rollers'
+#colour picker: http://tristen.ca/hcl-picker/#/hlc/15/0.81/25303A/F2ED7C
+fpl <- ggplot(myleague_df, aes(x = event, y = week_rank, group = name)) + geom_line(aes(colour = name)) + geom_text(data = myleague_df[myleague_df$event == max(myleague_df$event),], aes(label = paste0(name,' (',total_points,' pts)')), vjust = -0.25, nudge_x = 2, size = 6) + labs(title = paste0(league_title, ' League'), x = 'Gameweek', y = 'Rank',  subtitle = paste0('Gameweek ',max(myleague_df$event))) + theme_minimal() + scale_color_discrete(name = "Player Name") +  scale_y_continuous(trans = "reverse")
+plotly:: ggplotly(fpl)
+#save png
+setwd("C:\\Users\\catha\\OneDrive\\Documents\\R_FPL\\R_FPL")
+ggsave(paste0('GW',max(myleague_df$event),'.png'), last_plot(), height = 10, width = 40)
+library(fplscrapR)
+#scrape data to get each teams weekly captain
+captains <- get_entry_captain(ids, myleague_df$event[1:21])
+#add to one data frame
+captains_df <- bind_rows(captains)
+library(fplscrapR)
+#scrape data to get each teams weekly captain
+captains <- get_entry_captain(ids, myleague_df$event[1:21])
+#add to one data frame
+captains_df <- dplyr::bind_rows(captains)
+captains_df <- dplyr::arrange(captains_df,event)
+ggplot(captains_df, aes(x = captains, group = playername)) + geom_histogram(color = name)
+library(fplscrapR)
+#scrape data to get each teams weekly captain
+captains <- get_entry_captain(ids, myleague_df$event[1:21])
+#add to one data frame
+captains_df <- dplyr::bind_rows(captains)
+captains_df <- dplyr::arrange(captains_df,event)
+ggplot(captains_df, aes(x = captains, group = playername)) + geom_histogram()
+library(fplscrapR)
+library(dplyr)
+#we fetch my player selection picks for the next gameweek
+picks <- get_entry_picks(entryid=846352,gw=21)$picks
+# fetch the Official FPL Expected Points projections
+df <- get_player_info() %>%
+select(id,playername,ep_next) %>%
+mutate("element"=id)
+#indicate expected points projection is a numeric vector
+df$ep_next <- as.numeric(df$ep_next)
+#
+df2 <- left_join(picks,df,by="element") %>% select(playername,is_captain,is_vice_captain,ep_next)
+colnames(df2) = c("Player Name", "Captain", "Vice Captain", "Expected Points")
+df2
+#Add up all the expected points of the players I have picked for gameweek 21
+print(sum(df2$ep_next[1:11]))
+library(fplscrapR)
+#we fetch the entry information using get_entry
+df <- get_entry(entryid=846352)
+df$leagues$classic %>%
+# selecting the columns of interest here
+dplyr::select(name,entry_last_rank)
+colnames(df) <- c("League Name", "Current Rank")
+library(fplscrapR)
+#we fetch the entry information using get_entry
+df <- get_entry(entryid=846352)
+df$leagues$classic %>%
+# selecting the columns of interest here
+dplyr::select(name,entry_last_rank)
+#rename table columns
+colnames(df$leagues$classic) <- c("League Name", "Current Rank")
+library(fplscrapR)
+#we fetch the entry information using get_entry
+df <- get_entry(entryid=846352)
+df$leagues$classic %>%
+# selecting the columns of interest here
+dplyr::select(name,entry_last_rank) %>%
+#rename table columns
+colnames(df$leagues$classic) <- c("League Name", "Current Rank")
+library(fplscrapR)
+#we fetch the entry information using get_entry
+df <- get_entry(entryid=846352)
+df$leagues$classic %>%
+# selecting the columns of interest here
+dplyr::select(name,entry_last_rank)
+#rename table columns
+colnames(df) <- c("League Name", "Current Rank")
+library(fplscrapR)
+#we fetch the entry information using get_entry
+df <- get_entry(entryid=846352)
+df$leagues$classic %>%
+# selecting the columns of interest here
+dplyr::select(name,entry_last_rank)
+#rename table columns
+colnames(df$leagues) <- c("League Name", "Current Rank")
+library(fplscrapR)
+#we fetch the entry information using get_entry
+df <- get_entry(entryid=846352)
+df$leagues$classic %>%
+# selecting the columns of interest here
+dplyr::select(name,entry_last_rank)
+#rename table columns
+colnames(df$leagues$classic) <- c("League Name", "Current Rank")
+library(fplscrapR)
+library(dplyr)
+#we fetch my player selection picks for the next gameweek
+picks <- get_entry_picks(entryid=846352,gw=21)$picks
+# fetch the Official FPL Expected Points projections
+df <- get_player_info() %>%
+select(id,playername,ep_next) %>%
+mutate("element"=id)
+#indicate expected points projection is a numeric vector
+df$ep_next <- as.numeric(df$ep_next)
+#
+df2 <- left_join(picks,df,by="element") %>% select(playername,is_captain,is_vice_captain,ep_next)
+#rename table columns
+colnames(df2) = c("Player Name", "Captain", "Vice Captain", "Expected Points")
+df2
+#Add up all the expected points of the players I have picked for gameweek 21
+ep <- sum(df2$ep_next[1:11])
+new_row <- c("", "", "", ep)
+ep_table <- rbind(df2, new_row)
+ep_table
+library(fplscrapR)
+library(dplyr)
+#we fetch my player selection picks for the next gameweek
+picks <- get_entry_picks(entryid=846352,gw=21)$picks
+# fetch the Official FPL Expected Points projections
+df <- get_player_info() %>%
+select(id,playername,ep_next) %>%
+mutate("element"=id)
+#indicate expected points projection is a numeric vector
+df$ep_next <- as.numeric(df$ep_next)
+#
+df2 <- left_join(picks,df,by="element") %>% select(playername,is_captain,is_vice_captain,ep_next)
+#rename table columns
+colnames(df2) = c("Player Name", "Captain", "Vice Captain", "Expected Points")
+#Add up all the expected points of the players I have picked for gameweek 21
+ep <- sum(df2$ep_next[1:11])
+new_row <- c("", "", "", ep)
+ep_table <- rbind(df2, new_row)
+ep_table
+library(fplscrapR)
+library(dplyr)
+#we fetch my player selection picks for the next gameweek
+picks <- get_entry_picks(entryid=846352,gw=21)$picks
+# fetch the Official FPL Expected Points projections
+df <- get_player_info() %>%
+select(id,playername,ep_next) %>%
+mutate("element"=id)
+#indicate expected points projection is a numeric vector
+df$ep_next <- as.numeric(df$ep_next)
+#
+df2 <- left_join(picks,df,by="element") %>% select(playername,is_captain,is_vice_captain,ep_next)
+#rename table columns
+colnames(df2) = c("Player Name", "Captain", "Vice Captain", "Expected Points")
+#Add up all the expected points of the players I have picked for gameweek 21
+ep <- abs(df2$ep_next[1:11])
+library(fplscrapR)
+library(dplyr)
+#we fetch my player selection picks for the next gameweek
+picks <- get_entry_picks(entryid=846352,gw=21)$picks
+# fetch the Official FPL Expected Points projections
+df <- get_player_info() %>%
+select(id,playername,ep_next) %>%
+mutate("element"=id)
+#indicate expected points projection is a numeric vector
+df$ep_next <- as.numeric(df$ep_next)
+#
+df2 <- left_join(picks,df,by="element") %>% select(playername,is_captain,is_vice_captain,ep_next)
+#rename table columns
+colnames(df2) = c("Player Name", "Captain", "Vice Captain", "Expected Points")
+#Add up all the expected points of the players I have picked for gameweek 21
+ep <- sum(df2$ep_next[1:11])
+new_row <- c("", "", "", ep)
+ep_table <- rbind(df2, new_row)
+ep_table
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+install.packages("data.table")
+install.packages("formattable")
+library(fplscrapR)
+library(dplyr)
+library(formattable)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+install.packages("data.table")
+install.packages("formattable")
+library(fplscrapR)
+library(dplyr)
+library(formattable)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+install.packages("data.table")
+install.packages("formattable")
+library(fplscrapR)
+library(dplyr)
+library(formattable)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+install.packages("data.table")
+install.packages("formattable")
+library(fplscrapR)
+library(dplyr)
+library(formattable)
+library(fplscrapR)
+library(dplyr)
+library(formattable)
+#installation
+if (!require(remotes)) {
+install.packages("remotes")
+}
+install.packages("dplyr")
+install.packages("data.table")
+devtools::install_github("renkun-ken/formattable")

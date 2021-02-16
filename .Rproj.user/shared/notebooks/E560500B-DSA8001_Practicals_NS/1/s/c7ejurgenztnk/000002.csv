@@ -1,0 +1,45 @@
+"0","```r
+#H0: mu = 1
+#HA: mu != 1
+
+mu0 <- 1
+x_bar <- 0.9975
+stdev <- 0.012
+n <- 120
+
+
+z <- (x_bar - mu0)/(sqrt(stdev*2/n)) 
+paste0(\"z = \", round(z, 2))
+```"
+"1","[1] \"z = -0.18\"
+"
+"0","```r
+#P(|Z| > 3.142506) = ?
+# because we have two sided p test value it is calculated as follows
+
+p_value <- 2 * pnorm(z)
+p_value <- round(p_value, 3)
+
+paste0(\"p_value = \", p_value)
+```"
+"1","[1] \"p_value = 0.86\"
+"
+"0","```r
+paste0(\"Test is significant at 5% level, because 0.1% < p = \", p_value * 100, \"% <= 5%.  There is considerable evidence for rejection H0 in favour HA.\"
+)
+```"
+"1","[1] \"Test is significant at 5% level, because 0.1% < p = 86% <= 5%.  There is considerable evidence for rejection H0 in favour HA.\"
+"
+"0","```r
+# calculating 95% C.I.
+z_critical <- qnorm(0.975)
+
+ci <- c(
+  x_bar - z_critical * sqrt(stdev^2/n), 
+  x_bar + z_critical * sqrt(stdev^2/n)
+)
+# ci <- round(ci, 2)
+paste0(\"95% C.I. is [\", ci[1], \", \", ci[2], \"]\")
+```"
+"1","[1] \"95% C.I. is [0.99535296702754, 0.999647032972461]\"
+"

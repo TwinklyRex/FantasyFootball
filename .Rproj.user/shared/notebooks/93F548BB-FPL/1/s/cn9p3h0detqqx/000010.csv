@@ -1,0 +1,4 @@
+"0",""
+"0","#save png"
+"0","setwd(""C:\\Users\\catha\\OneDrive\\Documents\\R_FPL\\R_FPL"")"
+"0","ggsave(paste0('GW',max(myleague_df$event),'.png'), last_plot(), height = 10, width = 40)"

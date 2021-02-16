@@ -1,0 +1,6 @@
+"0","iris_copy %>% "
+"0","  ggplot(aes(x = Species, y = Sepal.Width)) +"
+"0","  geom_boxplot()"
+"2","Error in ggplot(., aes(x = Species, y = Sepal.Width)) : 
+  object 'iris_copy' not found
+"

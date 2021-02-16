@@ -1,0 +1,7 @@
+"0","library(fplscrapR)"
+"0","#we fetch the entry information using get_entry"
+"0","df <- get_entry(entryid=846352)"
+"0",""
+"0","df$leagues$classic %>%"
+"0","  # selecting the columns of interest here"
+"0","  dplyr::select(name,entry_last_rank) "

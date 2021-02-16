@@ -1,0 +1,13 @@
+"0",""
+"0","mean_owner <- mean(Boston$Value)"
+"0","paste0(""The cutoff value for the top 9% of the overall values of owner-occupied homes "", "
+"0","#round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1))"
+"0","paste0(""and the proportion of homes above this value is "
+"0","      "","
+"0","      (round(pnorm(0.91, mean = mean_owner, sd = 10.67, lower.tail = FALSE) * 100, 2))"
+"2","Error: Incomplete expression: paste0(""The cutoff value for the top 9% of the overall values of owner-occupied homes "", 
+#round(qnorm(0.91, mean = mean_owner, sigma = 10.67), 1))
+paste0(""and the proportion of homes above this value is 
+      "",
+      (round(pnorm(0.91, mean = mean_owner, sd = 10.67, lower.tail = FALSE) * 100, 2))
+"

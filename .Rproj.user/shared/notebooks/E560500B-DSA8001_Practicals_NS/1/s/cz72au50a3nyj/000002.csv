@@ -1,0 +1,27 @@
+"0","```r
+#H0: u = 38
+#HA: u != 38
+s <- 12
+mu <- 38
+wmu <- 39.4
+v <- 1.92
+
+#Testing H0
+H0 <- (wmu - mu) / sqrt((v / s))
+  round(H0, 3)
+```"
+"1","[1] 3.5
+"
+"0","```r
+  
+  #calculate the critical region
+  cr <- pnorm(0.975)
+  round(cr, 3)
+```"
+"1","[1] 0.835
+"
+"0","```r
+#Calculate confidence interval
+ # ci <- 
+
+```"

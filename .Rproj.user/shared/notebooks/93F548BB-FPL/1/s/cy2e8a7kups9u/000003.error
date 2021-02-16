@@ -1,0 +1,1 @@
+{"frames":[],"message":"Error in get_entry_captain(ids, myleague_df$event[1:21]) : \n  could not find function \"get_entry_captain\"\n"}

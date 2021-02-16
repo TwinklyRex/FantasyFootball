@@ -1,0 +1,29 @@
+{
+    "id": "7AB9B020",
+    "path": "~/R_FPL/R_FPL/FPL.Rmd",
+    "project_path": "FPL.Rmd",
+    "type": "r_markdown",
+    "hash": "0",
+    "contents": "",
+    "dirty": true,
+    "created": 1613319485351.0,
+    "source_on_save": false,
+    "relative_order": 2,
+    "properties": {
+        "tempName": "Untitled2",
+        "chunk_output_type": "inline",
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "141,78",
+        "scrollLine": "136",
+        "last_setup_crc32": ""
+    },
+    "folds": "",
+    "lastKnownWriteTime": 1613325204,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1613332865892,
+    "read_only": false,
+    "read_only_alternatives": []
+}

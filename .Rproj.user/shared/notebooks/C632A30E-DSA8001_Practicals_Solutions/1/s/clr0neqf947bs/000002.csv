@@ -1,0 +1,7 @@
+"0","new_data <-  data.frame("
+"0","  Petal.Length = c(1.5, 1.6, 1.7)  # predictor column name needs to be the same as the one in the original dataset"
+"0",")"
+"0",""
+"0","predict(iris_model, new_data)"
+"2","Error in predict(iris_model, new_data) : object 'iris_model' not found
+"

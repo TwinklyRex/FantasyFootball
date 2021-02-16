@@ -1,0 +1,6 @@
+"0",""
+"0","mu = 80 # advertised weight content"
+"0",""
+"0","weights_mean <- mean(measured_weights)"
+"2","Error in mean(measured_weights) : object 'measured_weights' not found
+"

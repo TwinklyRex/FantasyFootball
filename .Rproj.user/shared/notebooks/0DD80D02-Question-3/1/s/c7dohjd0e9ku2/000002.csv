@@ -1,0 +1,30 @@
+"0","if(!require(tidyverse)) install.packages(""tidyverse"")"
+"0","if(!require(car)) install.packages(""car"")"
+"0","library(tidyverse)"
+"0","library(car)"
+"0",""
+"0","set.seed(123)"
+"0",""
+"0","library(MASS)"
+"2","
+Attaching package: ‘MASS’
+
+"
+"2","The following object is masked from ‘package:dplyr’:
+
+    select
+
+"
+"0","data(Boston)"
+"0","Boston <-  tibble(Boston)"
+"0",""
+"0","Boston <- Boston %>% "
+"0","  rename(Crime = crim) %>% "
+"0","  rename(Zone = zn) %>%"
+"0","  rename(River = chas) %>%"
+"0","  rename(Room = rm) %>%"
+"0","  rename(Radial = rad) %>%"
+"0","  rename(Ratio = ptratio) %>%"
+"0","  rename(Value = medv)  %>%"
+"0","  dplyr:: select(Crime,Zone,River,Room,"
+"0","                 Radial,Ratio,Value)"

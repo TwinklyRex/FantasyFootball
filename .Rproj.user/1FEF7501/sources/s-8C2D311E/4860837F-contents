@@ -1,0 +1,1216 @@
+title: "DSA8001 - Practicals & Solutions"
+output: 
+  html_notebook:
+    toc: true
+    toc_float: true
+---
+
+```{r include=FALSE}
+if(!require(tidyverse)) install.packages("tidyverse")
+if(!require(car)) install.packages("car")
+library(tidyverse)
+library(car)
+```
+
+
+# Analysing Normally Distributed Data
+
+## Question 1
+
+Head lengths of brushtail possums follow a nearly normal distribution with mean 92.6 mm and standard deviation 3.6 mm. 
+ 
+ 1. Compute the Z-scores for possums with head lengths of 95.4 mm and 85.8 mm. 
+ 2. Use calculated Z-scores to determine how many standard deviations above or below the mean measured head lengths of these two possums fall 
+ 3. Head length of which possum is more unusual?
+
+### Solution
+
+1. Compute the Z-scores for possums with head lengths of 95.4 mm and 85.8 mm
+
+```{r}
+
+z_score <- function(x, mu, sigma) {
+  z = (x - mu) / sigma
+  z
+}
+
+#  mean 92.6 mm and standard deviation 3.6 mm
+mu_possums = 92.6
+sigma_possums = 3.6
+
+# 1. Compute the Z-scores for possums with head lengths of 95.4 mm and 85.8 mm
+x1 <- 95.4
+x2 <- 85.8
+
+z1 <- z_score(x = x1, mu = mu_possums, sigma = sigma_possums)
+z2 <- z_score(x = x2, mu = mu_possums, sigma = sigma_possums)
+
+paste0("z1 = ", round(z1, 2))
+paste0("z2 = ", round(z2, 2))
+```
+
+2. 
+
+A possum with the head length of 95.4 is 0.78 standard deviations ABOVE the mean
+
+A possum with the head length of 85.8 is 1.89 standard deviations BELOW the mean
+
+3. 
+
+Because `r paste0("|z2| = ", round(abs(z2), 2), " >= |z1| = ", round(abs(z1), 2))`, opossum with the head length of 85.8 mm is more unusual than
+opossum with the head length of 95.4 mm
+
+## Question 2
+
+Suppose the average number of Facebook friends is approximated well by the normal model N(mu = 1500, sigma = 300). Randomly selected person Julie has 1800 friends. 
+
+1. She would like to know what percentile she falls among other Facebook users? 
+2. What is the percentage of people that have more friends than Julie?
+
+### Solution
+
+1.
+
+```{r}
+julie_pctile <- pnorm(1800, mean = 1500, sd = 300) * 100
+
+julie_pctile
+```
+
+Julie is `r round(julie_pctile, 2)` percentile.
+
+2. 
+
+If `r round(julie_pctile, 2)`% have less facebook friends than Julie, than the proportion of people that have more friends is `r 100 - round(julie_pctile, 2)`%.
+
+## Question 3
+
+Suppose the average number of Facebook friends is approximated well by the normal model N(mu = 1500, sigma = 300). What is the probability that a randomly selected person has **AT LEAST** 1630 friends on Facebook? 
+
+NOTE: Round solution to 3 decimal places.
+
+### Solution
+
+```{r}
+
+# solution 1
+
+prob1 <- 1 - pnorm(1630, mean = 1500, sd = 300)
+prob1 <- round(prob1, 3)
+prob1
+
+# OR solution 2
+
+prob2 <- pnorm(1630, mean = 1500, sd = 300, lower.tail = FALSE)
+prob2 <- round(prob2, 3)
+prob2 
+
+# inspecting whether results are the same
+prob1 == prob2
+```
+
+The probability that randomly selected person has at least 1630 friends on Facebook is `r prob1`.
+
+## Question 4
+
+Suppose the average number of Facebook friends is approximated well by the normal model N(mu = 1500, sigma = 300). A randomly selected person is at the 79.95th percentile. How many Facebook friends does this person have?
+
+### Solution
+```{r}
+friends_count <- qnorm(0.7995, mean = 1500, sd = 300)
+
+friends_count
+```
+
+Randomly selected person, which is at the 79.95th percentile, has `r round(friends_count)` friends on Facebook.
+
+## Question 5
+
+At Heinz factory the amounts which go into bottles of ketchup are supposed to be normally distributed with mean 36 oz. standard deviation 0.11 oz. Once every 30 minutes a bottle is selected from the production line, and its contents are noted precisely. If the amount of ketchup in the bottle is below 35.8 oz. or above 36.2 oz., then the bottle fails the quality control inspection. 
+
+1. What percentage of bottles have less than 35.8 ounces of ketchup?
+2. What percentage of bottles **PASS** the quality control inspection? 
+
+NOTE: Round solutions to 2 decimal places
+
+### Solution
+
+1.
+
+```{r}
+paste0(round(pnorm(35.8, mean = 36, sd = 0.11) * 100, 2), "% of bottles have less than 35.8 oz of ketchup.")
+```
+
+2.
+
+```{r}
+pass_inspection <- pnorm(36.2, mean = 36, sd = 0.11) - pnorm(35.8, mean = 36, sd = 0.11)
+
+pass_inspection
+
+# converting to percentages and rounding to 2 decimal places
+pass_inspection <- round(pass_inspection * 100, 2)
+
+pass_inspection
+```
+
+`r pass_inspection`% of bottles pass inspection.
+
+## Question 6
+
+Body temperatures of healthy humans are distributed nearly normally with mean 98.2F and standard deviation 0.73F. What is the cutoff for the lowest 3% of human body temperatures?  
+
+NOTE: Round solution to 1 decimal place.
+
+### Solution
+
+```{r}
+paste0("The cutoff value for the lowest 3% of human body temperature is ", 
+       round(qnorm(0.03, mean = 98.2, sd = 0.73), 1), "F")
+```
+
+# Statistical Inference
+
+## Test of single mean (mu) using the Z statistic
+
+### Question 1
+
+The mean content of a sample of 120 bottles of milk from one days output of a dairy was found to be 0.9975 litres, while the standard deviation of the sample was 0.012 litres. investigate if there is evidence to suggest that the mean content of that days output is different from 1 litre.
+
+#### Solution
+
+```{r}
+# H0: mu = 1
+# HA: mu != 1
+
+mu0 <- 1
+
+x_bar <- 0.9975
+stdev <- 0.012
+n <- 120
+
+z <- (x_bar - mu0)/sqrt(stdev^2/n)
+paste0("z = ", round(z, 2))
+
+# P(|Z| > 3.142506) = ?
+# because we have two sided test p_value is calculated as follows
+p_value <- 2 * pnorm(z)
+p_value <- round(p_value, 3)
+paste0("p_value = ", p_value)
+
+paste0("Test is significant at 5% level, because 1% < p = ", 
+       p_value * 100,
+       "% <= 5%.  There is considerable evidence for rejection H0 in favour HA."
+)
+
+# calculating 95% C.I.
+z_critical <- qnorm(0.975)
+
+ci <- c(
+  x_bar - z_critical * sqrt(stdev^2/n), 
+  x_bar + z_critical * sqrt(stdev^2/n)
+)
+ci <- round(ci, 2)
+paste0("95% C.I. is [", ci[1], ", ", ci[2], "]")
+```
+
+
+
+## Test of the comparison of two means using the Z statistic
+
+### Question 1
+
+Suppose we wish to determine if there is a difference in mean weight between the two sexes in a particular bird species, at a 5% significance level. The following data were obtained: 
+
+* Male sample size n1 = 125, mean weight x1_bar = 92.31 g, and variaiance var1 = 56.22 g^2
+* Female sample size n2 = 85, mean weight x2_bar = 88.84 g, and variaiance var2 = 65.41 g^2
+
+If significant, give a 95% CI for mu1 - mu2.
+
+#### Solution
+
+```{r}
+# H0: mu1 = mu2
+# HA: mu1 != mu2 i.e. mu1 - mu2 != 0
+
+n1 <- 125
+x1_bar <- 92.31
+var1 <- 56.22
+
+n2 <- 85
+x2_bar <- 88.84
+var2 <- 65.41
+
+z <- (x1_bar - x2_bar) / sqrt((var1/n1) + (var2/n2))
+paste0("z = ", round(z, 2))
+
+# P(|Z| > 3.142506) = ?
+# because we have two sided test p_value is calculated as follows
+p_value <- 2 * pnorm(z, lower.tail = FALSE)
+p_value <- round(p_value, 3)
+paste0("p_value = ", p_value)
+
+paste0("Test is highly significant at 5% level, because 0.1% < p = ", 
+       p_value * 100,
+       "% <= 1%.  There is considerable evidence for rejection H0 in favour HA."
+)
+
+# calculating 95% C.I.
+z_critical <- qnorm(0.975)
+
+ci <- c(
+  (x1_bar - x2_bar) - z_critical * sqrt((var1/n1) + (var2/n2)), 
+  (x1_bar - x2_bar) + z_critical * sqrt((var1/n1) + (var2/n2))
+)
+ci <- round(ci, 2)
+paste0("95% C.I. is [", ci[1], ", ", ci[2], "]")
+```
+
+
+## Test of single proportion
+
+### Question 1
+
+In a random sample of 120 graduates, 78 spent 3 years at university and 42 more than 3 years. Test the hypothesis that 70% of graduates obtain degrees in a length of time which is different from 3 years. Give a 95% c.i. for the population proportion.
+
+NOTE: Round solution to 3 decimal places.
+#### Solution
+
+```{r}
+# H0: p = 0.7
+# HA: p != 0.7
+
+p <- 0.7
+
+# sample size
+n <- 120
+
+# sample proportion
+p_hat <- 78/120
+
+# Test statistic
+z <- (p_hat - p) / sqrt(p * (1 - p) / n)
+paste0("z = ", round(z, 1))
+
+# because we have two sided test p_value is calculated as follows
+p_value <- 2 * pnorm(z)
+p_value <- round(p_value, 3)
+paste0("p_value = ", p_value)
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p_value = ", 
+       p_value * 100,
+       "% > 5%."
+)
+
+# 95% C.I.
+z_critical <- qnorm(0.975)
+
+ci <- c(p_hat - z_critical * sqrt(p_hat * (1-p_hat) / n), p_hat + z_critical * sqrt(p_hat * (1-p_hat) / n))
+ci <- round(ci, 3)
+
+paste0("95% C.I. is [", ci[1], ", ", ci[2], "]")
+
+# or alternatively 
+test_results <- prop.test(x = c(78), n = c(120), p = c(0.7), correct = F, alternative = "two.sided")
+test_results
+
+p_value_alt <- round(test_results$p.value, 3)
+paste0("p_value_alt = ", p_value_alt)
+p_value_alt == p_value
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p_value_alt = ", 
+       p_value_alt * 100,
+       "% > 5%."
+)
+
+# Slightly different values of the 95% CI are obtained because
+# R's CI formula is based on the Yates continuity correction formula which is used in Chi-square tests
+ci_alt <- test_results$conf.int
+ci_alt <- round(ci_alt, 3)
+
+paste0("95% C.I. is [", ci_alt[1], ", ", ci_alt[2], "]")
+
+```
+
+
+## Test of two proportions
+
+### Question 1
+
+We wish to compare the germination rates of spinach seeds for two different methods of preparation:
+
+* __Method A:__ 80 seeds sown, 65 germinate
+* __Method B:__ 90 seeds sown, 80 germinate
+
+
+NOTE: Round solution to 3 decimal places.
+#### Solution
+
+```{r}
+# H0: p1 = p2
+# HA: p1 != p2
+
+n1 <- 80
+x1 <- 65
+
+n2 <- 90
+x2 <- 80
+
+p1_hat <- x1/n1
+
+p2_hat <- x2/n2
+
+
+p_hat <- (x1 + x2)/(n1 + n2)
+
+
+# Test statistic
+z <- (p1_hat - p2_hat) / sqrt(p_hat * (1 - p_hat) * (1/n1 + 1/n2))
+paste0("z = ", round(z, 1))
+
+# because we have two sided test p_value is calculated as follows
+p_value <- 2 * pnorm(z)
+p_value <- round(p_value, 3)
+paste0("p_value = ", p_value)
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p_value = ", 
+       p_value * 100,
+       "% > 5%."
+)
+
+# 95% C.I.
+z_critical <- qnorm(0.975)
+
+ci <- c((p1_hat - p2_hat) - z_critical * sqrt(p1_hat * (1 - p1_hat) / n1 + p2_hat * (1 - p2_hat) / n2), 
+        (p1_hat - p2_hat) + z_critical * sqrt(p1_hat * (1 - p1_hat) / n1 + p2_hat * (1 - p2_hat) / n2)
+      )
+ci <- round(ci, 3)
+
+paste0("95% C.I. is [", ci[1], ", ", ci[2], "]")
+
+# or alternatively 
+test_results <- prop.test(x = c(x1, x2), n = c(n1, n2), correct = F, alternative = "two.sided")
+test_results
+
+p_value_alt <- round(test_results$p.value, 3)
+paste0("p_value_alt = ", p_value_alt)
+p_value_alt == p_value
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p_value_alt = ", 
+       p_value_alt * 100,
+       "% > 5%."
+)
+
+# Slightly different values of the 95% CI are obtained because
+# R's CI formula is based on the Yates continuity correction formula which is used in Chi-square tests
+ci_alt <- test_results$conf.int
+ci_alt <- round(ci_alt, 3)
+
+paste0("95% C.I. is [", ci_alt[1], ", ", ci_alt[2], "]")
+
+```
+
+## Tests based on the t-distribution (Single Mean)
+
+### Question 1
+
+What proportion of the t-distribution with 18 degrees of freedom falls below -2.10? 
+
+NOTE: Round solution to 3 decimal places.
+
+#### Solution
+
+```{r}
+# plain R syntax
+round(pt(-2.1, df = 18), 3)
+
+# tidyverse syntax
+pt(-2.1, df = 18) %>% 
+  round(3)
+```
+
+### Question 2
+
+What proportion of the t-distribution with 20 degrees of freedom falls above 1.65? 
+
+NOTE: Round solution to 3 decimal places.
+
+#### Solution
+
+```{r}
+# tidyverse syntax
+pt(1.65, df = 20, lower.tail = FALSE) %>% 
+  round(3)
+```
+
+### Question 3
+
+What proportion of the t-distribution with 2 degrees of freedom falls 3 standard deviations from the mean (above or below)?
+
+NOTE: Round solution to 3 decimal places.
+
+#### Solution
+
+```{r}
+# solution 1
+
+below_3sd <- pt(-3, df = 2)
+above_3sd <- pt(3, df = 2, lower.tail = FALSE)
+
+paste0("Proportion below 3 SD: ", below_3sd)
+paste0("Proportion above 3 SD: ", above_3sd)
+
+paste0(
+  "Proportion of the t-distribution that falls 3SD above or below the mean is: ",
+  (below_3sd + above_3sd) %>% 
+  round(3)
+)
+
+# solution 2
+
+paste0(
+  "Proportion of the t-distribution that falls 3SD above or below the mean is: ",
+  (2 * pt(-3, df = 2)) %>% 
+  round(3)
+)
+
+# solution 3
+
+paste0(
+  "Proportion of the t-distribution that falls 3SD above or below the mean is: ",
+  (2 * pt(3, df = 2, lower.tail = FALSE)) %>% 
+  round(3)
+)
+
+
+```
+
+### Question 4
+
+The temperature of warm water springs in a basin is reported to have a mean of 38C. A sample of 12 springs from the west end of the basin had mean temperature 39.4 and variance 1.92. 
+
+1. Have springs at the west end a greater mean temperature? 
+2. Have springs at the west end a different mean temperature? Give a 95% c.i. for the mean temperature.
+
+
+NOTE: Round solution to 3 decimal places.
+
+#### Solution
+
+```{r}
+
+t = (39.4 - 38) / sqrt(1.92 / 12)
+
+paste0("Under H0, t=", t, " is an observation from t11")
+
+```
+
+1. 
+
+```{r}
+
+# H0: mu = 38
+# H1: mu > 38
+
+p_value <- pt(t, df = 11, lower.tail = FALSE) %>% 
+  round(3)
+
+paste0("p_value = ", p_value)
+
+paste0("Test is highly significant at 5% level, because 0.1% < p = ", 
+       p_value * 100,
+       "% <= 1%.  There is considerable evidence for rejection H0 in favour HA."
+)
+
+```
+
+2.
+
+```{r}
+
+# H0: mu = 38
+# H1: mu != 38
+
+p_value <- 2 * pt(t, df = 11, lower.tail = FALSE) %>% 
+  round(3)
+
+paste0("p_value = ", p_value)
+
+paste0("Test is highly significant at 5% level, because 0.1% < p = ", 
+       p_value * 100,
+       "% <= 1%.  There is considerable evidence for rejection H0 in favour HA."
+)
+
+# Give a 95% c.i. for the mean temperature
+
+# calculate a critical value
+t11_critical <- qt(0.975, df=11) %>% # upper 2.5% of t11
+  round(3)
+
+ci <- c(39.4 - t11_critical * sqrt(1.92 / 12), 39.4 + t11_critical * sqrt(1.92 / 12))
+ci
+paste0("95% C.I. is [", ci[1], ", ", ci[2], "]")
+```
+
+### Question 5
+
+Sweets producing company was interested in the mean net weight of contents in an advertised 80-gram pack. The manufacturer has precisely weighed the contents of 24 randomly selected 80-gram packs from different stores and recorded the weights as follows:
+
+```{r}
+measured_weights <- c(87.7,80.01,77.28,78.76,81.52,74.2,80.71,79.5,77.87,81.94,80.7,
+               82.32,75.78,80.19,83.91,79.4,77.52,77.62,81.4,74.89,82.95,
+               73.59,77.92,77.18)
+```
+
+1. Investigate the hypothesis that the sweets content in the packages is lesser than what is claimed on the package.
+2. Investigate the hypothesis that the sweets content in the packages is lesser than what is claimed on the package. Give a 95% c.i. for the mean weight.
+
+NOTE: Round solution to 3 decimal places.
+
+#### Solution
+
+```{r}
+
+mu = 80 # advertised weight content
+
+weights_mean <- mean(measured_weights)
+weights_mean
+
+weights_var <- var(measured_weights) # variance
+n <- length(measured_weights) # or it could be manually set as n <- 24
+
+t <- ((weights_mean - mu) / sqrt(weights_var / n)) %>% 
+  round(3)
+
+
+paste0("Under H0, t=", t, " is an observation from t23")
+```
+
+1.
+
+```{r}
+
+# H0: mu = 80
+# H1: mu < 80
+
+
+p_value <- pt(t, df = n - 1, lower.tail = TRUE) %>% # n = 24 which implies that df = n - 1 = 23
+  round(3)
+
+paste0("p_value = ", p_value)
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA, because p = ", 
+       p_value * 100,
+       "% > 5%."
+)
+
+# alternative solution with the same result
+test_results <- t.test(measured_weights, mu = 80, alternative = "less")
+
+p_value_alt <- test_results$p.value %>% round(3)
+
+# check whether the alternative solution matches with the one that we created manually
+p_value_alt == p_value 
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA, because p = ", 
+       p_value_alt * 100,
+       "% > 5%."
+)
+```
+
+2. 
+
+```{r}
+# H0: mu = 80
+# H1: mu != 80
+
+p_value <- 2 * pt(t, df = n-1) %>% 
+  round(3)
+
+paste0("p_value = ", p_value)
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA, because p = ", 
+       p_value * 100,
+       "% > 5%."
+)
+
+# Give a 95% c.i. for the mean temperature
+
+# calculate a critical value
+t23_critical <- qt(0.975, df=23) %>% # upper 2.5% of t11
+  round(3)
+
+ci <- c(weights_mean - t23_critical * sqrt(weights_var / n), weights_mean + t23_critical * sqrt(weights_var / n)) %>% 
+  round(3)
+ci
+paste0("95% C.I. is [", ci[1], ", ", ci[2], "]")
+
+# alternative solution with the same result
+test_results <- t.test(measured_weights, mu = 80, alternative = "two.sided")
+
+p_value_alt <- test_results$p.value %>% round(3)
+
+# check whether the alternative solution matches with the one that we created manually
+p_value_alt == p_value 
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA, because p = ", 
+       p_value_alt * 100,
+       "% > 5%."
+)
+
+ci_alt <- test_results$conf.int %>% 
+  round(3)
+
+paste0("95% C.I. is [", ci_alt[1], ", ", ci_alt[2], "]")
+```
+
+## Tests based on the t-distribution (Paired Coparison)
+
+### Question 1
+
+Consider an experiment to compare the effects of two sleeping drugs A and B. There are 10 subjects and each subject receives treatment with each of the two drugs (the order of treatment being randomised). The number of hours slept by each subject is recorded. Is there any difference between the effects of the two drugs? Give a 95% c.i. for the unknown mean difference.
+
+NOTE: Round solution to 3 decimal places.
+
+```{r}
+df <- data.frame(
+  Subject_ID = 1:10,
+  Hours_Sleeping_A = c(9.9, 8.8, 9.1, 8.1, 7.9, 12.4, 13.5, 9.6, 12.6, 11.4),
+  Hours_Sleeping_B = c(8.7, 6.4, 7.8, 6.8, 7.9, 11.4, 11.7, 8.8, 8.0, 10.0)
+)
+```
+
+#### Solution
+
+```{r}
+# mu_A - mu_B = 0
+# mu_A - mu_B != 0
+
+mu_diff = mean(df$Hours_Sleeping_A - df$Hours_Sleeping_B) # or alternatively: mu_diff = mean(df$Hours_Sleeping_A) - mean(df$Hours_Sleeping_B)
+mu_diff # mean of the differences 
+
+var_diff = var(df$Hours_Sleeping_A - df$Hours_Sleeping_B)
+n = nrow(df)
+
+t = ((mu_diff - 0)/sqrt(var_diff / n)) %>% 
+  round(3)
+
+paste0("Under H0, t=", t, " is an observation from t9")
+
+p_value <- (2 * pt(t, df = n - 1, lower.tail = FALSE)) %>% round(3)
+paste0("p_value = ", p_value)
+
+paste0("Test is highly significant at 5% level, because 0.1% < p = ", 
+       p_value * 100,
+       "% <= 1%.  There is considerable evidence for rejection H0 in favour HA."
+)
+
+# calculate a critical value
+t23_critical <- qt(0.975, df= n - 1) %>% # upper 2.5% of t11
+  round(3)
+
+ci <- c(mu_diff - t23_critical * sqrt(var_diff / n), mu_diff + t23_critical * sqrt(var_diff / n)) %>% 
+  round(3)
+ci
+paste0("95% C.I. is [", ci[1], ", ", ci[2], "]")
+
+
+# or alternative solution
+
+# alternative solution with the same result
+test_results <- t.test(df$Hours_Sleeping_A, df$Hours_Sleeping_B, paired = T, alternative = "two.sided")
+
+p_value_alt <- test_results$p.value %>% round(3)
+
+# check whether the alternative solution matches with the one that we created manually
+p_value_alt == p_value 
+
+paste0("Test is highly significant at 5% level, because 0.1% < p_alt = ", 
+       p_value_alt * 100,
+       "% <= 1%.  There is considerable evidence for rejection H0 in favour HA."
+)
+
+ci_alt <- test_results$conf.int %>% 
+  round(3)
+
+paste0("95% C.I. is [", ci_alt[1], ", ", ci_alt[2], "]")
+```
+
+## Tests based on the t-distribution (Independent Samples)
+
+### Question 1
+
+Two methods of oxidation care are used in an industrial process. Repeated measurements of the oxidation time are made to test the hypothesis that the oxidation time of method 1 is different than that of method 2 on average. 
+
+* __Method 1:__ Sample size = 9, Sample mean = 41.3, Sample Variance = 20.7
+* __Method 2:__ Sample size = 8, Sample mean = 48.9, Sample Variance = 34.2
+
+Assuming that the unknown variances are equal, investigate if there is there any difference between the oxidation times of the two methods? Give a 95% c.i. for the unknown mean difference.
+
+#### Solution
+
+```{r}
+# H0: mu1 - mu2 = 0
+# H1: mu1 - mu2 != 0
+
+n1 <- 9
+mean1 <- 41.3
+var1 <- 20.7
+
+n2 <- 8
+mean2 <- 48.9
+var2 <- 34.2
+
+df <- n1 + n2 - 2
+var_pooled <- ((n1 - 1) * var1 + (n2 - 1) * var2) / (n1 + n2 - 2)
+
+t <- ((mean1 - mean2) / sqrt(var_pooled * (1 / n1 + 1 / n2))) %>% 
+    round(3)
+
+paste0("Under H0, t=", t, " is an observation from t", df)
+
+p_value <- (2 * pt(t, df = df, lower.tail = TRUE)) %>% round(3)
+
+paste0("p_value = ", p_value)
+
+paste0("Test is highly significant at 5% level, because 0.1% < p = ", 
+       p_value * 100,
+       "% <= 1%.  There is considerable evidence for rejection H0 in favour HA."
+)
+```
+
+```{r}
+# 95% C.I.
+
+# calculate a critical value
+t15_critical <- qt(0.975, df= df) %>% # upper 2.5% of t15
+  round(3)
+
+ci <- c((mean1 - mean2) - t15_critical * sqrt(var_pooled * (1/n1 + 1/n2)), (mean1 - mean2) + t15_critical * sqrt(var_pooled * (1/n1 + 1/n2))) %>% 
+  round(3)
+ci
+paste0("95% C.I. is [", ci[1], ", ", ci[2], "]")
+```
+
+### Question 2
+
+Two methods of oxidation care are used in an industrial process. Repeated measurements of the oxidation time are made to test the hypothesis that the oxidation time of method 1 is different than that of method 2 on average. The following measurements were recorded:
+
+* __Method 1:__ `c(29.915269, 8.920123, 36.647273, 54.038639, 37.583526, 19.860171, 13.470132, 43.139612, 39.825299)`
+* __Method 2:__ `c(28.970122, 43.563546, 4.161069, 39.774523, 5.705720, 93.562336,  3.801087, 79.906087)`
+
+Assuming that the unknown variances are equal, investigate if there is there any difference between the oxidation times of the two methods? Give a 95% c.i. for the unknown mean difference.
+
+#### Solution
+
+```{r}
+
+method1 <- c(29.915269, 8.920123, 36.647273, 54.038639, 37.583526, 19.860171, 13.470132, 43.139612, 39.825299)
+method2 <- c(28.970122, 43.563546, 4.161069, 39.774523, 5.705720, 93.562336,  3.801087, 79.906087)
+
+# regular R syntax
+n1 <- length(method1)
+mean1 <- mean(method1)
+var1 <- var(method1)
+
+# dplyr syntax
+n2 <- method2 %>% length()
+mean2 <- method2 %>% mean()
+var2 <- method2 %>% var()
+
+df <- n1 + n2 - 2
+var_pooled <- ((n1 - 1) * var1 + (n2 - 1) * var2) / (n1 + n2 - 2)
+
+t <- ((mean1 - mean2) / sqrt(var_pooled * (1 / n1 + 1 / n2))) %>% 
+    round(3)
+
+paste0("Under H0, t=", t, " is an observation from t", df)
+
+p_value <- (2 * pt(t, df = df, lower.tail = TRUE)) %>% round(3)
+
+paste0("p_value = ", p_value)
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p = ", 
+       p_value * 100,
+       "% > 5%."
+)
+# 95% C.I.
+
+# calculate a critical value
+t15_critical <- qt(0.975, df= df) %>% # upper 2.5% of t15
+  round(3)
+
+ci <- c((mean1 - mean2) - t15_critical * sqrt(var_pooled * (1/n1 + 1/n2)), (mean1 - mean2) + t15_critical * sqrt(var_pooled * (1/n1 + 1/n2))) %>% 
+  round(3)
+ci
+paste0("95% C.I. is [", ci[1], ", ", ci[2], "]")
+```
+
+Or Alternatively
+
+```{r}
+test_results <- t.test(method1, method2, var.equal = T, alternative = "two.sided")
+
+p_value_alt <- test_results$p.value %>% round(3)
+
+# check whether the alternative solution matches with the one that we created manually
+p_value_alt == p_value 
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p = ", 
+       p_value_alt * 100,
+       "% > 5%."
+)
+
+ci_alt <- test_results$conf.int %>% 
+  round(3)
+
+paste0("95% C.I. is [", ci_alt[1], ", ", ci_alt[2], "]")
+```
+
+## Tests based on the Chi-Square distribution
+
+### Question 1
+
+What proportion of the chi-square distribution with 9 degrees of freedom falls above 17?
+
+#### Question 1
+
+```{r}
+pchisq(17, df = 9, lower.tail = FALSE) %>% round(3)
+
+# or alternatively
+round(1 - pchisq(17, df = 9), 3)
+```
+
+### Question 2
+
+The geneticist Mendel evolved the theory that for a certain type of pea, the characteristics Round and Yellow, R and Green, Angular and Y, A and G occurred in the ratio 9:3:3:1. He classified 556 seeds and the observed frequencies were 315, 108, 101 and 32. Test Mendel's theory on the basis of these data.
+
+#### Solution
+
+```{r}
+# H0: p_ry = 9/16, p_rg = 3/16, p_ay = 3/16, p_ag = 1/16
+# H1: probabilities not as in H0
+
+# observations
+o_ry <- 315
+o_rg <- 108
+o_ay <- 101
+o_ag <- 32
+
+observations <- c(o_ry, o_rg, o_ay, o_ag)
+
+df <- length(observations) - 1 # we have 4 groups so: df = 4 - 1 = 3
+
+o_total <- sum(observations) # or alternatively: o_total <- o_ry + o_rg + o_ay + o_ag 
+
+# probabilities
+p_ry <- 9/16
+p_rg <- 3/16
+p_ay <- 3/16
+p_ag <- 1/16
+
+probabilities <- c(p_ry, p_rg, p_ay, p_ag)
+
+# expected frequencies
+
+expected_freqs <- o_total * probabilities
+
+phi_squared <- sum((observations - expected_freqs)^2/expected_freqs) %>% round(3)
+
+
+
+paste0("Under H0, phi_squared=", phi_squared, " is an observation from Chi-square_", df)
+
+p_value <- pchisq(phi_squared, df = 3, lower.tail = FALSE) %>% round(3) # P(Chi-squared > 0.47)
+
+paste0("p_value = ", p_value)
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p = ", 
+       p_value * 100,
+       "% > 5%."
+)
+```
+
+Or Alternatively
+
+```{r}
+chisq_test <- chisq.test(observations, p = probabilities)
+
+p_value_alt <- chisq_test$p.value %>% round(3)
+
+p_value == p_value_alt
+
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p = ", 
+       p_value_alt * 100,
+       "% > 5%."
+)
+```
+
+### Question 3
+
+In a random sample of 120 graduates, 78 spent 3 years at University and 42 more than 3 years. Test hypothesis that 70% obtain degree in 3 years. 
+
+#### Solution
+
+```{r}
+
+# H0: P(degree in 3 years) = p = 0.7
+# H1: p != 0.7
+
+observations <- c(78, 42) # (degree in 3 years, degree in more than 3 years)
+
+df<- length(observations) - 1 # df = 2 - 1 = 1
+
+expectations <- c(0.7 * 120, 0.3 * 120) # (expected degree in 3 years, expected degree in more than 3 years)
+
+# because df = 1, we are using Yate's correction
+phi_squared <- sum(((abs(observations - expectations) - 1/2) ^ 2) / expectations ) %>% round(3)
+phi_squared
+
+paste0("Under H0, phi_squared=", phi_squared, " is an observation from Chi-square_", df)
+
+p_value <- pchisq(phi_squared, df = df, lower.tail = FALSE) %>% round(3) # P(Chi-squared > 1.2)
+
+paste0("p_value = ", p_value)
+
+paste0("The test is not significant at 5% level and H0 is not rejected in favour of HA because p = ", 
+       p_value * 100,
+       "% > 5%."
+)
+```
+
+## Analysis of Variance (ANOVA)
+
+### Question1
+
+**Iris** data set that comes preloaded with R gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica. 
+
+1. Create a copy of the Iris dataset that contains relevant variables, and:
+
+    1.1. Perform exploratory data analysis which will reveal how many flowers are in each category, how many sepal width values are missing, as well as what is the sepal width mean and standard deviation per each category.
+  
+    1.2 Perform graphical analysis which will reveal how collected sepal width values compare across the species (histograms and boxplots)
+    
+    1.3. Investigate if there is a difference between the means of the sepal width variable among this three species, and if there is, perform further investigation on which species have statistically significant difference between the means? 
+
+2. Similarly, repeat the investigation process for the other variables?
+
+#### Solution
+
+1. create a copy of the iris dataset that contains relevant variables
+
+```{r}
+
+head(iris)
+glimpse(iris)
+
+iris_copy <- iris %>%
+  select(
+    Sepal.Width, Species
+  )
+```
+
+1.1 Perform exploratory data analysis which will reveal how many flowers are in each category, how many sepal width values are missing, as well as what is the sepal width mean and standard deviation per each category.
+```{r}
+iris_copy %>% 
+  group_by(Species) %>% 
+  summarise(
+    n_samples = n(),
+    n_missing = sum(is.na(Sepal.Width)), # how many Sepal.Widths is missing in each category
+    mean_sepal_width = mean(Sepal.Width, na.rm = TRUE), # this dataset does not have missing values. If it did we would need na.rm=T 
+    sd_sepal_width = sd(Sepal.Width, na.rm = TRUE)
+  )
+```
+
+ 1.2 Perform graphical analysis which will reveal how collected sepal width values compare across the species (histograms and boxplots)
+```{r }
+hist_setosa <- iris_copy %>% 
+  filter(
+    Species == "setosa"
+  ) %>% 
+  pull(Sepal.Width) %>% # extract data.frame column as vector
+  hist(breaks = 10)
+
+hist_versicolor <- iris_copy %>% 
+  filter(
+    Species == "versicolor"
+  ) %>% 
+  pull(Sepal.Width) %>% # extract data.frame column as vector
+  hist(breaks = 10)
+
+hist_virginica <- iris_copy %>% 
+  filter(
+    Species == "virginica"
+  ) %>% 
+  pull(Sepal.Width) %>% # extract data.frame column as vector
+  hist(breaks = 10)
+```
+
+```{r}
+plot(hist_setosa, col = scales::alpha('red',.3), main = "Distribution of Sepal Widths", xlab = "Sepal Width")
+plot(hist_versicolor, col = scales::alpha('green',.3), add = T)
+plot(hist_virginica, col = scales::alpha('blue',.3), add = T)
+legend("topright", c("setosa", "virginica", "versicolor"), col=c(scales::alpha('red',.3), scales::alpha('green',.3), scales::alpha('blue',.3)), lwd=10)
+
+boxplot(iris_copy$Sepal.Width ~ iris_copy$Species)
+```
+
+1.3. Investigate if there is a difference between the means of the sepal width variable among this three species, and if there is, perform further investigation on which species have statistically significant difference between the means? 
+
+H0: The mean sepal width is the same across all species
+HA: At least one mean is different than others
+
+```{r}
+# perform anova test
+# NOTE: in our case if the variable Species was not of the "factor" type
+#   we would need to convert it to factor before conducting ANOVA test using the following approach
+#   iris_copy$Species <- factor(iris_copy$Species)
+anova_test <- aov(Sepal.Width ~ Species, data = iris_copy)
+
+
+
+# summary of the test
+summary(anova_test)
+
+p_value <- summary(anova_test)[[1]][[1,'Pr(>F)']] %>% 
+  round(3)
+
+paste0("p_value = ", p_value)
+
+paste0("The test is very significant at 5% level because p = ", 
+       p_value * 100,
+       "% < 5%. We are very confidendt that HA is to be preferred to H0, i.e. at least one mean is different from the others"
+)
+
+```
+
+
+**Check ANOVA conditions**
+
+Assuming the independence of data, we should check whether the other conditions are valid as well.
+
+**Condition 1:** The variability across the groups should be about equal.
+```{r}
+plot(anova_test, 1)
+```
+
+In the plot above, there is no evident relationship between residuals and fitted values which implies equal variances across the groups (homogeniety of variances).
+
+Alternatively, we can also use Levene's test to test equality of variances:
+
+```{r}
+# The variability across the groups should be about equal. 
+leveneTest(Sepal.Width ~ Species, data = iris_copy)
+```
+
+Because the p-value obtained from Levene's test is p = 55.5% > 5%, the thest is not significant and there is no evidence to suggest that the variance across species is statistically significantly different (i.e. we can assume the equalirty of variance).
+
+**Condition 2:** The observations within each group should be nearly normal.
+
+This can be very difficult to determine in many real time situations, and to achieve this we need to mean-center each sepal width by it's respective group mean. These group-wise, mean-centered values are also known as **residuals**, and by using them we can assess the normality of all observations as a whole.
+
+
+```{r}
+# Graphical method for assessing normality of residuals - QQ Plot
+plot(anova_test, 2)
+```
+
+Alternatively, for testing normality of residuals we can use **Shapiro-Wilk test**:
+
+```{r}
+anova_test_residuals <- residuals(anova_test)
+
+shapiro.test(anova_test_residuals)
+```
+
+Because the p-value obtained from Shapiro-Wilk test is p = 32.3% > 5%, the test is not significant and there is no evidence to suggest that the normality assumption is violated (i.e. we can assume normality of the residuals).
+
+As we concluded that at least one pair of means differ, and because we do not know which one, we need to use **t-tests** with **Bonferroni correction** to compare each pair of means to each other (i.e. multiple comparisons).
+
+```{r}
+pairwise.t.test(iris_copy$Sepal.Width, iris_copy$Species, p.adjust.method = "bonferroni")
+```
+
+**Conclusions:**
+
+1. In the case of the mean difference in sepal widths between species **versicolor** and **virginica**, the test is highly significant at 5% level because 0.1% < p = 0.94% < 1%. There is considerable evidence for rejection H0 in favour of HA, i.e. considerable evidence of a difference between the average sepal widths of the species **versicolor** and **virginica**.
+
+2. In other two comparisons (**setosa-versicolor** and **setosa-virginica**) the test is very highly significant at 5% level because p = 0% < 1%. Therefore, we are very confident that HA is to be preferred to H0, i.e very confident that there is a difference between the average sepal widths of the species **setosa-versicolor** and **setosa-virginica**.
+
+## Simple Linear Regression
+
+### Question1
+
+**Iris** data set that comes preloaded with R gives the measurements in centimeters of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica. 
+
+Create a copy of the Iris dataset that contains variables Petal.Width and Petal.Length, and:
+
+1. Fit a simple linear regression create model for predicting petal widths based on the petal lengths.
+
+2. Plot the line of the best fit against the input dataset
+
+3. State the estimated simple linear regression equation
+
+4. State whether there is a significan relationship between the predictor and response variable.
+
+5. Assuming that both petal width and length values are given in milimetres (mm), state the interpretation of the estimated slope parameter
+
+6. If the petal lengths are 1.5, 1.6 and 1.7 mm, what are their estimated petal widths?
+    
+#### Solution
+
+```{r}
+# create a copy of the iris dataset
+
+iris_copy <- iris %>% 
+  select(
+    Petal.Width,
+    Petal.Length
+  )
+```
+
+1. 
+
+```{r}
+iris_model <- lm(Petal.Width ~ Petal.Length, data = iris_copy)
+```
+
+2.
+
+```{r}
+plot(iris$Petal.Length, iris$Petal.Width)
+abline(iris_model, col="red")
+```
+
+3.
+```{r}
+summary(iris_model)
+```
+The summary output shows the following components:
+
+* __Call:__ Displays the formula that has been used to fit the regression model.
+
+* __Residuals:__ Displays summary statistics of residuals, which by definition should have a mean equal to zero. Therefore, as an indication of the normally distributed residuals, median should not be far from zero, and the minimum and maximum should be roughly equal in absolute value. __NOTE:__ Similar to ANOVA, normality of the residuals can be inspected using Shapiro-Wilk test.
+
+* __Coefficients:__ Displays the values of the intercept and slope parameters,and their statistical significance. 
+
+ANSWER:
+The estimated simple regression equation is: __Petal.Width_Estimated = -0.363076 + 0.415755 * Petal.Length__
+
+
+4.
+
+By looking at the summary output above, we can see that the p-value < 0.01%, so we can reject the null hypothesis that β_1 = 0. Because the test is very highly significant at 5% level, we are very confident that there is a significant relationship between the predictor and the response variable in the linear regression model.
+
+
+5. For each additional mm increase in length, we would expect petal width to increase for 0.415755 mm.
+
+6.
+
+```{r}
+new_data <-  data.frame(
+  Petal.Length = c(1.5, 1.6, 1.7)  # predictor column name needs to be the same as the one in the original dataset
+)
+
+predict(iris_model, new_data)
+```

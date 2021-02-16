@@ -1,0 +1,47 @@
+"0","```r
+# H0: mu1 = mu2
+# HA: mu1 != mu2 i.e. mu1 - mu2 != 0
+
+n1 <- 125
+x1_bar <- 92.31
+var1 <- 56.22
+
+n2 <- 85
+x2_bar <- 88.84
+var2 <- 65.41
+
+z <- (x1_bar - x2_bar) / sqrt((var1/n1) + (var2/n2))
+paste0(\"z = \", round(z, 2))
+```"
+"1","[1] \"z = 3.14\"
+"
+"0","```r
+# P(|Z| > 3.142506) = ?
+# because we have two sided test p_value is calculated as follows
+p_value <- 2 * pnorm(z, lower.tail = FALSE)
+p_value <- round(p_value, 3)
+paste0(\"p_value = \", p_value)
+```"
+"1","[1] \"p_value = 0.002\"
+"
+"0","```r
+paste0(\"Test is highly significant at 5% level, because 0.1% < p = \", 
+       p_value * 100,
+       \"% <= 1%.  There is considerable evidence for rejection H0 in favour HA.\"
+)
+```"
+"1","[1] \"Test is highly significant at 5% level, because 0.1% < p = 0.2% <= 1%.  There is considerable evidence for rejection H0 in favour HA.\"
+"
+"0","```r
+# calculating 95% C.I.
+z_critical <- qnorm(0.975)
+
+ci <- c(
+  (x1_bar - x2_bar) - z_critical * sqrt((var1/n1) + (var2/n2)), 
+  (x1_bar - x2_bar) + z_critical * sqrt((var1/n1) + (var2/n2))
+)
+ci <- round(ci, 2)
+paste0(\"95% C.I. is [\", ci[1], \", \", ci[2], \"]\")
+```"
+"1","[1] \"95% C.I. is [1.31, 5.63]\"
+"

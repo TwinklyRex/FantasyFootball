@@ -1,0 +1,16 @@
+"0","```r
+below_3sd <- pt(-3, df = 2)
+above_3sd <- pt(3, df = 2, lower.tail = FALSE)
+
+(below_3sd + above_3sd) %>% 
+  round(3)
+```"
+"1","[1] 0.095
+"
+"0","```r
+#solution2
+
+round(2 * pt(3, df = 2, lower.tail = FALSE), 3)
+```"
+"1","[1] 0.095
+"

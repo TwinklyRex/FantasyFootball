@@ -1,0 +1,101 @@
+"0","```r
+# H0: p1 = p2
+# HA: p1 != p2
+
+n1 <- 80
+x1 <- 65
+
+n2 <- 90
+x2 <- 80
+
+p1_hat <- x1/n1
+
+p2_hat <- x2/n2
+
+
+p_hat <- (x1 + x2)/(n1 + n2)
+
+
+# Test statistic
+z <- (p1_hat - p2_hat) / sqrt(p_hat * (1 - p_hat) * (1/n1 + 1/n2))
+paste0(\"z = \", round(z, 1))
+```"
+"1","[1] \"z = -1.4\"
+"
+"0","```r
+# because we have two sided test p_value is calculated as follows
+p_value <- 2 * pnorm(z)
+p_value <- round(p_value, 3)
+paste0(\"p_value = \", p_value)
+```"
+"1","[1] \"p_value = 0.16\"
+"
+"0","```r
+paste0(\"The test is not significant at 5% level and H0 is not rejected in favour of HA because p_value = \", 
+       p_value * 100,
+       \"% > 5%.\"
+)
+```"
+"1","[1] \"The test is not significant at 5% level and H0 is not rejected in favour of HA because p_value = 16% > 5%.\"
+"
+"0","```r
+# 95% C.I.
+z_critical <- qnorm(0.975)
+
+ci <- c((p1_hat - p2_hat) - z_critical * sqrt(p1_hat * (1 - p1_hat) / n1 + p2_hat * (1 - p2_hat) / n2), 
+        (p1_hat - p2_hat) + z_critical * sqrt(p1_hat * (1 - p1_hat) / n1 + p2_hat * (1 - p2_hat) / n2)
+      )
+ci <- round(ci, 3)
+
+paste0(\"95% C.I. is [\", ci[1], \", \", ci[2], \"]\")
+```"
+"1","[1] \"95% C.I. is [-0.184, 0.031]\"
+"
+"0","```r
+# or alternatively 
+test_results <- prop.test(x = c(x1, x2), n = c(n1, n2), correct = F, alternative = \"two.sided\")
+test_results
+```"
+"1","
+	2-sample test for equality of proportions
+	without continuity correction
+
+data:  c(x1, x2) out of c(n1, n2)
+X-squared = 1.9703, df = 1, p-value =
+0.1604
+alternative hypothesis: two.sided
+95 percent confidence interval:
+ -0.1837708  0.0309930
+sample estimates:
+   prop 1    prop 2 
+0.8125000 0.8888889 
+"
+"0","```r
+p_value_alt <- round(test_results$p.value, 3)
+paste0(\"p_value_alt = \", p_value_alt)
+```"
+"1","[1] \"p_value_alt = 0.16\"
+"
+"0","```r
+p_value_alt == p_value
+```"
+"1","[1] TRUE
+"
+"0","```r
+paste0(\"The test is not significant at 5% level and H0 is not rejected in favour of HA because p_value_alt = \", 
+       p_value_alt * 100,
+       \"% > 5%.\"
+)
+```"
+"1","[1] \"The test is not significant at 5% level and H0 is not rejected in favour of HA because p_value_alt = 16% > 5%.\"
+"
+"0","```r
+# Slightly different values of the 95% CI are obtained because
+# R's CI formula is based on the Yates continuity correction formula which is used in Chi-square tests
+ci_alt <- test_results$conf.int
+ci_alt <- round(ci_alt, 3)
+
+paste0(\"95% C.I. is [\", ci_alt[1], \", \", ci_alt[2], \"]\")
+```"
+"1","[1] \"95% C.I. is [-0.184, 0.031]\"
+"

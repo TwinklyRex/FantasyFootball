@@ -1,0 +1,3 @@
+"0","iris_model <- lm(Petal.Width ~ Petal.Length, data = iris_copy)"
+"2","Error in is.data.frame(data) : object 'iris_copy' not found
+"

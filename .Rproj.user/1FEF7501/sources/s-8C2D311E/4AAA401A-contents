@@ -1,0 +1,93 @@
+---
+title: "Introduction to R"
+output:
+  html_notebook:
+    toc: yes
+    toc_float: yes
+  word_document:
+    toc: yes
+---
+
+```{r include=FALSE}
+# install.packages("tidyverse")
+library(tidyverse)
+```
+
+
+# Introduction
+
+I'm going to investigate if there is a linear relationship between *speed* and _distance_ of the **cars** dataset. First of all, let's examine our dataset (display first 6 rows):
+
+```{r echo=FALSE}
+head(cars)
+```
+
+this is the whole dataset:
+
+```{r echo=FALSE}
+cars
+```
+
+# Exploratory Data Analytics
+
+Let's investigate the size and dimensionality of our __cars__ dataset:
+
+```{r echo=FALSE}
+n_rows <- nrow(cars)
+n_cols <- ncol(cars)
+
+# n_rows
+# n_cols
+```
+The number of rows is: `r n_rows`, whereas the number of columns is `r n_cols`.
+
+## Linear Relationship Investigation (Plots)
+Let's plot the variables to see if there is any kind of linear relationship present
+
+```{r echo=FALSE}
+plot(cars)
+```
+
+GGplot variant:
+
+```{r}
+cars %>%
+  ggplot(aes(x=speed, y=dist)) +
+  geom_point() +
+  theme_bw()
+```
+
+## Linear Relationship Investigation (Summary Stats)
+
+let's investigate correlation:
+
+```{r}
+cor_speed_dist <- cor(cars$speed, cars$dist)
+cor_speed_dist <- round(cor_speed_dist, 2)
+cor_speed_dist
+```
+
+the same thing using tidyverse:
+```{r}
+cor_speed_dist_tidyv <- cor(cars$speed, cars$dist)
+
+cor_speed_dist_tidyv %>% 
+  round(2)
+```
+
+```{r}
+cars %>% 
+  filter(
+    between(speed, 4, 10)
+  ) %>% 
+  mutate(
+    speed_sq = speed^2,
+    dist_sqrt = round(sqrt(dist), 2)
+  )
+```
+
+# LaTeX code
+
+you can add some text and inline math expression $\frac{a+b}{c+d}$ which is really really cool!
+
+math code centered $$\lim\limits_{x \to \infty} \exp(-x) = 0$$ which is again really really cool!

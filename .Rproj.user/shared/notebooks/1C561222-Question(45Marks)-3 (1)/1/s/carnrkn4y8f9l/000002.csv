@@ -1,0 +1,6 @@
+"0","dmnds_copy <- dmnds %>%"
+"0","  select ("
+"0","    cut,"
+"0","    price"
+"0","  )"
+"0","  dmnds_copy"

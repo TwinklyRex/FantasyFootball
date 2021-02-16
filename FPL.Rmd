@@ -1,0 +1,124 @@
+---
+title: "Analyse of 'The High Rollers' Fantasy Football League"
+output: 
+  html_notebook:
+  toc_float: yes
+  toc: yes
+ word_document:
+    toc: yes
+---
+
+
+
+```{r setup}
+#installation
+
+if (!require(remotes)) {
+install.packages("remotes") 
+}
+install.packages("dplyr")
+
+
+remotes::install_github("wiscostret/fplscrapR")
+
+library(fplscrapR)
+library(tidyverse)
+
+
+```
+
+#Introduction
+Just like the other estimated 7.5 million Fantasy Football Players in the world, I compete in a mini-league with my friends. In this report, I am going to analyse the statistics behind this years (2021) mini-league beginning with how the league table has changed each gameweek.
+```{r echo=TRUE}
+paste0("Just like the other estimated 7.5 million Fantasy Football Players in the world, I compete in a mini-league with my friends. In this report, I am going to analyse the statistics behind this years (2021) mini-league beginning with how the league table has changed each gameweek.")
+```
+```{r}
+library(fplscrapR)
+#we fetch the entry information using get_entry
+df <- get_entry(entryid=846352)
+
+df$leagues$classic %>%
+  # selecting the columns of interest here
+  dplyr::select(name,entry_last_rank) 
+```
+
+```{r }
+library(fplscrapR)
+library(ggplot2)
+#ids for each team
+ids <- c(846352, 3215836, 2205222, 2436805, 4426769, 3878948, 3968541, 2464418, 254903, 2694508, 2856693)
+
+#scrape data to get each teams weekly performance
+myleague <- lapply(ids, get_entry_season)
+
+#add to one data frame
+myleague_df <- dplyr::bind_rows(myleague)
+myleague_df <- dplyr::arrange(myleague_df,event,overall_rank)
+
+#work out Week by week rank
+myleague_df <- myleague_df %>%
+dplyr::group_by(event) %>%
+dplyr::mutate(week_rank = rank(overall_rank, ties.method = 'first'))
+
+#title of league
+league_title = 'The High Rollers'
+
+
+#colour picker: http://tristen.ca/hcl-picker/#/hlc/15/0.81/25303A/F2ED7C
+
+
+fpl <- ggplot(myleague_df, aes(x = event, y = week_rank, group = name)) + geom_line(aes(colour = name)) + geom_text(data = myleague_df[myleague_df$event == max(myleague_df$event),], aes(label = paste0(name,' (',total_points,' pts)')), vjust = -0.25, nudge_x = 2, size = 6) + labs(title = paste0(league_title, ' League'), x = 'Gameweek', y = 'Rank',  subtitle = paste0('Gameweek ',max(myleague_df$event))) + theme_minimal() + scale_color_discrete(name = "Player Name") +  scale_y_continuous(trans = "reverse")
+
+plotly:: ggplotly(fpl)
+
+#save png
+setwd("C:\\Users\\catha\\OneDrive\\Documents\\R_FPL\\R_FPL")
+ggsave(paste0('GW',max(myleague_df$event),'.png'), last_plot(), height = 10, width = 40)
+```
+#Captains
+Next, we will look at some of the most popular Captain picks in Fantasy Premier League and analyse what Captains our mini-league players use each gameweek.
+```{r}
+#scrape data to get each teams weekly captain
+#captains <- get_entry_captain(ids, myleague_df$event[1:21])
+
+#add to one data frame
+#captains_df <- bind_rows(captains)
+#captains_df <- arrange(captains_df,event)
+
+#ggplot(captains_df, aes(x = captains, group = playername)) + geom_histogram(color = name)
+
+
+```
+
+
+
+#Gameweek 21
+As you can see, I am not currently doing well at the moment. In order to improve my standing in the mini-league, it may be in my best interest to see how well I am expected to do in the next gameweek.
+
+
+```{r }
+library(fplscrapR)
+library(dplyr)
+#we fetch my player selection picks for the next gameweek
+picks <- get_entry_picks(entryid=846352,gw=21)$picks
+
+
+# fetch the Official FPL Expected Points projections 
+df <- get_player_info() %>%
+  select(id,playername,ep_next) %>%
+  mutate("element"=id)
+
+#indicate expected points projection is a numeric vector
+df$ep_next <- as.numeric(df$ep_next)
+
+#
+df2 <- left_join(picks,df,by="element") %>% select(playername,is_captain,is_vice_captain,ep_next)
+
+df2
+
+#Add up all the expected points of the players I have picked for gameweek 21
+print(sum(df2$ep_next[1:11]))
+```
+
+
+

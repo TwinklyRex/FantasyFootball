@@ -1,0 +1,8 @@
+"0",""
+"0","Boston_copy <- Boston %>%"
+"0","  dplyr:: select ("
+"0","    Value,"
+"0","    Room"
+"0","  )"
+"0"," "
+"0","  head(Boston_copy)"

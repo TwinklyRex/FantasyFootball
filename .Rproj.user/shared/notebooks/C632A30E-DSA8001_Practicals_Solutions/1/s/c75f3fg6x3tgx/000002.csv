@@ -1,0 +1,2 @@
+"0","# Graphical method for assessing normality of residuals - QQ Plot"
+"0","plot(anova_test, 2)"

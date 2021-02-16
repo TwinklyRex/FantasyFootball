@@ -1,0 +1,3 @@
+"0",""
+"0","#rename table columns"
+"0","colnames(df$leagues$classic) <- c(""League Name"", ""Current Rank"")"
